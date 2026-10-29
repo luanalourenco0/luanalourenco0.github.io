@@ -94,9 +94,9 @@ window.PLANT = {
         ["Qualidade", "Mais de 110 testes automatizados (node:test) cobrindo validadores, importação, MCP, escritas e interface, além de checagem de tipos com tsc."],
       ],
       instruments: "TypeScript, Cloudflare D1, Drizzle ORM, esbuild, node:test, MCP, Claude Code e Codex",
-      notes: "Uso todo dia. A versão pessoal é privada porque lida com meus dados; uma versão pública com dados sintéticos está a caminho.",
+      notes: "Uso todo dia. A versão pessoal é privada porque lida com meus dados; a demonstração pública usa dados fictícios e pode ser testada à vontade.",
       // Preencher com a URL da versão pública quando ela for publicada; vazio esconde a linha.
-      demo: "",
+      demo: "https://luanalourenco0.github.io/luan-os-demo/",
     },
     {
       tag: "TK-502", kind: "tank", name: "Luz & Encanto", status: "finalizado",
