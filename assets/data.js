@@ -117,13 +117,13 @@ window.PLANT = {
       notes: "Eu cuido da prospecção e da venda. Nenhum contato com cliente sai sem a minha revisão.",
     },
     {
-      tag: "TK-504", kind: "tank", name: "IA na engenharia", status: "desenvolvimento",
+      tag: "TK-504", kind: "tank", name: "IA na engenharia", status: "diario",
       d: [1480, 620], m: [290, 1340],
       service: "Agentes de IA aplicados ao trabalho técnico de um engenheiro químico.",
       inputs: "Problemas de engenharia: fluxogramas de processo, balanços, cálculos de fenômenos de transporte, relatórios e documentação técnica.",
       outputs: "Entregas técnicas mais rápidas e conferidas: fluxogramas corrigidos e validados por script, resoluções revisadas passo a passo e documentos no padrão exigido.",
       instruments: "Claude, Codex, Python, Visio, PDF",
-      notes: "A IA acelera, mas não assina: todo resultado é conferido contra a referência e a teoria antes da entrega. Cada disciplina nova vira um caso novo.",
+      notes: "A IA acelera, mas não assina: todo resultado é conferido contra a referência e a teoria antes da entrega. Faz parte da minha rotina de estudo e de trabalho.",
     },
     {
       tag: "N-900", kind: "outlet", name: "Fale comigo", 
