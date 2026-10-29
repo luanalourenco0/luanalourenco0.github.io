@@ -88,12 +88,14 @@ window.PLANT = {
       outputs: "Painel que se atualiza sozinho às 07h e às 19h, e um servidor MCP para Claude e outros agentes consultarem e mexerem nas tarefas.",
       extra: [
         ["Arquitetura", "Worker em TypeScript com banco D1 (SQLite) como fonte única da verdade. Snapshots de agenda, resumos e vagas são importados sem nunca regredir um registro mais novo."],
-        ["MCP", "7 ferramentas de leitura (get_today, get_agenda, get_deadlines, get_tasks, get_briefing, get_job_radar, get_core_health) e 4 de escrita (criar, editar, concluir e excluir tarefa), cada escrita com ID de operação e número de revisão para não duplicar nem sobrescrever."],
+        ["MCP", "15 ferramentas entre leitura e escrita controlada: agenda, prazos, tarefas, briefing, radar de vagas, saúde do sistema e importação de capturas. Cada escrita leva ID de operação e número de revisão para não duplicar nem sobrescrever."],
+        ["Radar de vagas", "Pontuação explicável de 0 a 100, filtros por senioridade, cargo, modalidade e local, e deduplicação de anúncios. Uma busca manual consulta os alertas do Gmail só quando eu peço."],
+        ["Interface", "Redesenho \"Linha do dia\": a home mostra o dia como uma linha do tempo com o agora, o foco do briefing e os próximos prazos, com tema claro e escuro e navegação pensada para o celular."],
         ["Decisões", "Fonte indisponível vira erro explícito, nunca lista vazia fingindo ser fato. Dado antigo vem marcado como desatualizado. O radar de vagas só sugere e nunca se candidata sozinho."],
-        ["Prazo", "Três sprints entre 22/09 e 02/10/2026. Em 02/10, o ciclo completo de criar, editar, concluir e excluir tarefa foi validado pelo plugin no ambiente real."],
-        ["Qualidade", "Mais de 110 testes automatizados (node:test) cobrindo validadores, importação, MCP, escritas e interface, além de checagem de tipos com tsc."],
+        ["Prazo", "Primeira versão em três sprints, entre 22/09 e 02/10/2026. Desde então, mais de 80 versões publicadas."],
+        ["Qualidade", "Mais de 590 testes automatizados (node:test) cobrindo validadores, importação, MCP, escritas, datas e interface, além de checagem de tipos com tsc."],
       ],
-      instruments: "TypeScript, Cloudflare D1, Drizzle ORM, esbuild, node:test, MCP, Claude Code e Codex",
+      instruments: "TypeScript, Cloudflare Workers e D1, Drizzle ORM, esbuild, node:test, MCP, Claude Code e Codex",
       notes: "Uso todo dia. A versão pessoal é privada porque lida com meus dados; a demonstração pública usa dados fictícios e pode ser testada à vontade.",
       // Preencher com a URL da versão pública quando ela for publicada; vazio esconde a linha.
       demo: "https://luanalourenco0.github.io/luan-os-demo/",
