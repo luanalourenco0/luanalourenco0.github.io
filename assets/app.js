@@ -350,6 +350,49 @@
   }));
   document.querySelector(".skip").addEventListener("click", () => { texto.hidden = false; });
 
+  // ---------- Abas "sobre mim" ----------
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  function selectTab(tab, focus) {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) tab.focus();
+  }
+  function showPanel(id) {
+    const tab = tabs.find((t) => t.getAttribute("aria-controls") === id);
+    if (!tab) return false;
+    selectTab(tab, false);
+    document.getElementById("sobre").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+    return true;
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => selectTab(t, false));
+    t.addEventListener("keydown", (e) => {
+      const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      if (k) { e.preventDefault(); selectTab(tabs[(i + k + tabs.length) % tabs.length], true); }
+      if (e.key === "Home") { e.preventDefault(); selectTab(tabs[0], true); }
+      if (e.key === "End") { e.preventDefault(); selectTab(tabs[tabs.length - 1], true); }
+    });
+  });
+  // Links como #idiomas ou #contato abrem a aba certa.
+  document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
+    if (showPanel(a.getAttribute("href").slice(1))) e.preventDefault();
+  }));
+  if (location.hash) showPanel(location.hash.slice(1));
+
+  document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(b.dataset.copy);
+      b.textContent = "E-mail copiado";
+    } catch (err) {
+      b.textContent = "Selecione e copie o e-mail";
+    }
+    setTimeout(() => { b.textContent = "Copiar e-mail"; }, 2500);
+  }));
+
   // ---------- Indicadores ----------
   document.getElementById("gauges").innerHTML = P.gauges.map((g) =>
     `<li><div class="bubble" aria-hidden="true"><b>${esc(g.letters)}</b><span>${esc(g.value)}</span></div><p><span class="sr-only">${esc(g.value)} </span>${esc(g.label)}</p></li>`
@@ -391,7 +434,7 @@
 
   const COMMANDS = {
     ajuda() {
-      log("Comandos: sobre, lista, abrir <tag ou nome>, tour, partir, parar, contato, stack, tema, texto, limpar.");
+      log("Comandos: sobre, lista, abrir <tag ou nome>, tour, partir, parar, trabalho, idiomas, contato, stack, tema, texto, limpar.");
     },
     sobre() {
       log("Luan, estudante de Engenharia Química na UFSC (conclusão prevista em 2028.1). Uso IA como alavanca para construir ferramentas de ponta a ponta, com revisão cruzada e aprovação humana.");
@@ -407,7 +450,13 @@
     tour() { if (!running) setRunning(true); open(P.tour[0], input); },
     partir() { setRunning(true); log("Planta em operação."); },
     parar() { setRunning(false); log("Planta parada."); },
-    contato() { open("N-900", input); },
+    contato() {
+      const p = P.person;
+      log(`LinkedIn: ${p.linkedin.replace("https://www.", "")}  GitHub: ${p.github.replace("https://", "")}  Gmail: ${p.email}`);
+      showPanel("contato");
+    },
+    trabalho() { showPanel("como-trabalho"); log("Abrindo: como eu trabalho."); },
+    idiomas() { showPanel("idiomas"); log("Português nativo. Inglês B2."); },
     stack() {
       log("Claude Code, Codex, Claude, ChatGPT e Gemini; MCP; TypeScript, Cloudflare D1 e Drizzle; Python; Google Apps Script e Planilhas; Canva; Git. Ainda não usei n8n, Make ou Zapier em produção.");
     },

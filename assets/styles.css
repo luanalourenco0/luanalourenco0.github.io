@@ -376,17 +376,78 @@ h1 {
 .ds-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 14px 24px; border-top: 2px solid var(--ink); }
 .ds-count { font: 13px var(--mono); color: var(--ink-soft); }
 
-/* Notas gerais e próximas revisões, abaixo da prancha */
-.notes {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 56px;
-  max-width: 1240px;
+/* Abas "sobre mim", abaixo da prancha, como as folhas seguintes de um desenho */
+.about {
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 64px 32px 72px;
+  padding: 64px 32px 80px;
 }
-.notes h2 { margin: 0 0 4px; font-size: 30px; font-weight: 800; font-stretch: 120%; line-height: 1.1; }
-.notes-sub { margin: 0 0 22px; color: var(--ink-soft); max-width: 52ch; }
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-bottom: 2px solid var(--ink);
+}
+.tab {
+  font: 600 15px/1 var(--font);
+  font-stretch: 110%;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1.5px solid var(--ink-soft);
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  padding: 12px 18px;
+  margin-bottom: -2px;
+  cursor: pointer;
+}
+.tab:hover { color: var(--ink); border-color: var(--ink); }
+.tab[aria-selected="true"] {
+  color: var(--ink);
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-bottom: 2px solid var(--paper);
+}
+.panel { padding: 32px 0 0; outline: none; }
+.panel:focus-visible { outline: 2px solid var(--focus); outline-offset: 8px; }
+.panel h2 { margin: 0 0 4px; font-size: 30px; font-weight: 800; font-stretch: 120%; line-height: 1.1; }
+.notes-sub { margin: 0 0 22px; color: var(--ink-soft); max-width: 60ch; }
+
+/* Idiomas: escala do QECR com o nível marcado */
+.langs { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+.langs li { padding: 20px 0 22px; border-bottom: 1px solid var(--grid-major); }
+.lang-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+.lang-head b { font-size: 21px; font-stretch: 110%; }
+.lang-head span { color: var(--ink-soft); }
+.scale { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; max-width: 520px; counter-reset: lvl; }
+.scale i {
+  font: 500 12px/1 var(--mono);
+  font-style: normal;
+  text-align: center;
+  padding: 9px 0;
+  border: 1.5px solid var(--ink);
+  color: var(--ink-soft);
+}
+.scale i:nth-child(-n + 4) { background: var(--liquid); color: var(--ink); }
+.scale i:nth-child(4) { background: var(--flow); color: #1b1300; border-color: var(--flow); }
+.scale--native i { background: var(--liquid); color: var(--ink); }
+.scale--native i:nth-child(4) { background: var(--liquid); color: var(--ink); border-color: var(--ink); }
+.scale--native i:last-child { background: var(--flow); color: #1b1300; border-color: var(--flow); }
+.langs p { margin: 12px 0 0; max-width: 62ch; }
+
+/* Contato */
+.contacts { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+.contacts li {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  align-items: center;
+  gap: 8px 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--grid-major);
+}
+.c-label { color: var(--ink-soft); font-size: 14px; }
+.c-value { font-size: clamp(17px, 2.2vw, 22px); font-weight: 700; font-stretch: 105%; overflow-wrap: anywhere; }
+.c-copy { font-size: 13px; padding: 8px 12px; }
+
 .general-notes { margin: 0; padding: 0; list-style: none; counter-reset: note; border-top: 2px solid var(--ink); }
 .general-notes li {
   counter-increment: note;
@@ -437,7 +498,10 @@ h1 {
   .console { border-right: 0; border-bottom: 1px solid var(--ink); padding: 12px 18px; }
   .gauges { border-right: 0; border-bottom: 1px solid var(--ink); flex-wrap: wrap; padding: 14px 18px; }
   .gauges li { max-width: none; flex: 1 1 140px; }
-  .notes { grid-template-columns: 1fr; gap: 40px; padding: 44px 20px 56px; }
+  .about { padding: 44px 18px 56px; }
+  .tab { padding: 10px 12px; font-size: 14px; }
+  .contacts li { grid-template-columns: 1fr auto; }
+  .c-label { grid-column: 1 / -1; }
   .texto dl { grid-template-columns: 1fr; gap: 0; }
   .texto dd { margin-bottom: 8px; }
 }

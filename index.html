@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=a2">
+  <link rel="stylesheet" href="assets/styles.css?v=a3">
   <script>
     try { var t = localStorage.getItem("planta-tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
@@ -29,9 +29,11 @@
         <nav class="links" aria-label="Contato">
           <a href="https://github.com/luanalourenco0">GitHub</a>
           <a href="https://www.linkedin.com/in/luan-de-almeida">LinkedIn</a>
-          <a href="mailto:luanalmeidasccp@gmail.com">E-mail</a>
+          <a href="mailto:luanalmeidasccp@gmail.com">Gmail</a>
           <button type="button" class="linklike linklike--case" data-open="TK-501">Ver o case LUAN OS</button>
           <a href="#como-trabalho">Como eu trabalho</a>
+          <a href="#idiomas">Idiomas</a>
+          <a href="#contato">Contato</a>
           <button type="button" class="linklike" data-action="texto">Ler em texto</button>
         </nav>
       </div>
@@ -78,20 +80,45 @@
     </footer>
   </div>
 
-  <section class="notes" id="como-trabalho" aria-label="Como eu trabalho e o que quero aprofundar">
-    <div class="notes-col">
+  <section class="about" id="sobre" aria-label="Sobre mim">
+    <div class="tabs" role="tablist" aria-label="Sobre mim">
+      <button type="button" role="tab" class="tab" id="tab-trabalho" aria-controls="como-trabalho" aria-selected="true">Como eu trabalho</button>
+      <button type="button" role="tab" class="tab" id="tab-idiomas" aria-controls="idiomas" aria-selected="false" tabindex="-1">Idiomas</button>
+      <button type="button" role="tab" class="tab" id="tab-aprofundar" aria-controls="aprofundar" aria-selected="false" tabindex="-1">O que quero aprofundar</button>
+      <button type="button" role="tab" class="tab" id="tab-contato" aria-controls="contato" aria-selected="false" tabindex="-1">Contato</button>
+    </div>
+
+    <div class="panel" role="tabpanel" id="como-trabalho" aria-labelledby="tab-trabalho" tabindex="0">
       <h2>Notas gerais</h2>
       <p class="notes-sub">Não é uma lista de soft skills. É como eu trabalho, escrito como as notas de um desenho de processo.</p>
       <ol class="general-notes">
-        <li><b>Começo pelo problema, não pela ferramenta.</b> Antes de abrir qualquer IA, escrevo o que entra, o que sai e como vou saber que deu certo. Herança da engenharia química: todo processo começa no balanço.</li>
-        <li><b>Uma fonte de verdade.</b> Se três agentes sabem versões diferentes da história, o erro é meu. Por isso tudo converge para um único lugar, o Cérebro-Luan.</li>
-        <li><b>Planejado não é feito.</b> Separo planejado, preparado, executado e verificado. Só digo que funcionou depois de ver a evidência.</li>
-        <li><b>Quem constrói não revisa.</b> Um modelo implementa, outro modelo, de outro provedor, critica, e eu decido.</li>
-        <li><b>Ação externa só com aprovação.</b> Enviar, publicar, gastar ou apagar passa por mim. Automação boa é a que eu consigo desligar.</li>
-        <li><b>Pequeno e em uso vence perfeito no papel.</b> O LUAN OS saiu em três sprints, em dez dias, e melhora com o uso diário.</li>
+        <li><b>Perfil analítico, sempre.</b> Antes de resolver, eu entendo: o que entra, o que sai, onde está o gargalo e como vou saber que deu certo. A engenharia química me ensinou a enxergar tudo como processo, e processo se resolve medindo, não chutando.</li>
+        <li><b>Se dá para automatizar, eu automatizo.</b> Hoje meu esforço está em passar para a IA tudo o que é repetitivo: o resumo do meu dia, a triagem de vagas, os posts da loja da minha mãe. O tempo que sobra vai para o que realmente precisa de mim.</li>
+        <li><b>Inovar é testar rápido.</b> Prefiro um protótipo em uso em poucos dias a um plano perfeito no papel. O LUAN OS saiu em três sprints, em dez dias, e melhora a cada semana de uso.</li>
+        <li><b>Erro vira regra.</b> Quando algo dá errado, não basta corrigir: eu escrevo a regra que impede o erro de voltar. Várias instruções que meus agentes seguem hoje nasceram assim.</li>
+        <li><b>Organização é o que deixa crescer.</b> Uma fonte única de verdade, cada tarefa com dono e um status claro: planejado, preparado, executado ou verificado. Foi assim que o caixa da ATEQA foi de R$ 4 mil para R$ 12,5 mil, e é assim que coordeno cinco agentes ao mesmo tempo.</li>
+        <li><b>A palavra final é humana.</b> Um modelo constrói, outro revisa, e eu decido. Enviar, publicar, gastar ou apagar sempre passa por mim.</li>
       </ol>
     </div>
-    <div class="notes-col">
+
+    <div class="panel" role="tabpanel" id="idiomas" aria-labelledby="tab-idiomas" tabindex="0" hidden>
+      <h2>Idiomas</h2>
+      <p class="notes-sub">Nível pelo Quadro Europeu Comum de Referência (A1 a C2).</p>
+      <ul class="langs">
+        <li>
+          <div class="lang-head"><b>Português</b><span>Nativo</span></div>
+          <div class="scale scale--native" aria-hidden="true"><i>A1</i><i>A2</i><i>B1</i><i>B2</i><i>C1</i><i>C2</i></div>
+          <p>Língua materna. Escrevo propostas, documentação e todas as instruções dos meus agentes em português.</p>
+        </li>
+        <li>
+          <div class="lang-head"><b>Inglês</b><span>B2, intermediário avançado</span></div>
+          <div class="scale" style="--lvl: 4" aria-hidden="true"><i>A1</i><i>A2</i><i>B1</i><i>B2</i><i>C1</i><i>C2</i></div>
+          <p>Leio documentação técnica e uso no dia a dia ferramentas de IA cuja documentação só existe em inglês.</p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel" role="tabpanel" id="aprofundar" aria-labelledby="tab-aprofundar" tabindex="0" hidden>
       <h2>Próximas revisões</h2>
       <p class="notes-sub">O que eu quero aprofundar daqui para a frente.</p>
       <table class="revisions">
@@ -103,6 +130,26 @@
           <tr><th scope="row">E</th><td><b>Produto.</b> Transformar uma ferramenta que eu uso numa que outra pessoa usa sem eu precisar explicar.</td></tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="panel" role="tabpanel" id="contato" aria-labelledby="tab-contato" tabindex="0" hidden>
+      <h2>Fale comigo</h2>
+      <p class="notes-sub">Estou buscando estágio a partir de 2027 em times que constroem com IA. Respondo rápido por qualquer um destes canais.</p>
+      <ul class="contacts">
+        <li>
+          <span class="c-label">LinkedIn</span>
+          <a class="c-value" href="https://www.linkedin.com/in/luan-de-almeida">linkedin.com/in/luan-de-almeida</a>
+        </li>
+        <li>
+          <span class="c-label">GitHub</span>
+          <a class="c-value" href="https://github.com/luanalourenco0">github.com/luanalourenco0</a>
+        </li>
+        <li>
+          <span class="c-label">Gmail</span>
+          <a class="c-value" href="mailto:luanalmeidasccp@gmail.com">luanalmeidasccp@gmail.com</a>
+          <button type="button" class="btn c-copy" data-copy="luanalmeidasccp@gmail.com">Copiar e-mail</button>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -136,7 +183,7 @@
     </section>
   </noscript>
 
-  <script src="assets/data.js?v=a2"></script>
-  <script src="assets/app.js?v=a2"></script>
+  <script src="assets/data.js?v=a3"></script>
+  <script src="assets/app.js?v=a3"></script>
 </body>
 </html>
