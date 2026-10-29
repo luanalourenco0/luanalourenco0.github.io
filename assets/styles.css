@@ -503,11 +503,13 @@ h1 {
 .scale--native i:last-child { background: var(--flow); color: #1b1300; border-color: var(--flow); }
 .langs p { margin: 12px 0 0; max-width: 62ch; }
 
-/* Stack de IA */
-.stack { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); display: grid; grid-template-columns: repeat(2, 1fr); }
-.stack li { padding: 18px 24px 20px 0; border-bottom: 1px solid var(--grid-major); }
-.stack b { font-size: 21px; font-stretch: 110%; }
-.stack p { margin: 6px 0 0; max-width: 52ch; }
+/* Stack */
+.stack { margin: 0; border-top: 2px solid var(--ink); }
+.stack > div { display: grid; grid-template-columns: 190px 1fr; gap: 6px 24px; padding: 16px 0; border-bottom: 1px solid var(--grid-major); }
+.stack dt { font-weight: 700; font-stretch: 110%; color: var(--ink); }
+.stack dd { margin: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; color: var(--ink); }
+.stack dd span { position: relative; }
+.stack dd span + span::before { content: ""; position: absolute; left: -12px; top: 50%; width: 4px; height: 4px; margin-top: -2px; border-radius: 50%; background: var(--ink-soft); }
 
 /* Contato */
 .contacts { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
@@ -577,6 +579,7 @@ h1 {
   .about { padding: 44px 18px 56px; }
   .tab { padding: 10px 12px; font-size: 14px; }
   .contacts li { grid-template-columns: 1fr auto; }
+  .stack > div { grid-template-columns: 1fr; }
   .c-label { grid-column: 1 / -1; }
   .texto dl { grid-template-columns: 1fr; gap: 0; }
   .texto dd { margin-bottom: 8px; }

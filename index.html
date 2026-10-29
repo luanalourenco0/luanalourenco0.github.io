@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=a6">
+  <link rel="stylesheet" href="assets/styles.css?v=a8">
   <script>
     try { var t = localStorage.getItem("planta-tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
@@ -26,7 +26,7 @@
       <div class="intro">
         <div class="id-row">
           <!-- Foto de perfil: salve como assets/foto.jpg. Sem o arquivo, o espaço some. -->
-          <img class="avatar" src="assets/foto.jpg" alt="Foto de Luan de Almeida Lourenço" width="64" height="64" hidden onload="this.hidden = false">
+          <img class="avatar" src="assets/foto.jpg?v=2" alt="Foto de Luan de Almeida Lourenço" width="64" height="64" hidden onload="this.hidden = false">
           <h1>Luan de Almeida Lourenço</h1>
         </div>
         <p class="lede">Estudo Engenharia Química na UFSC e construo sistemas com agentes de IA. Cada equipamento deste fluxograma é um projeto real: clique para abrir a folha de dados.</p>
@@ -91,7 +91,7 @@
   <section class="about" id="sobre" aria-label="Sobre mim">
     <div class="tabs" role="tablist" aria-label="Sobre mim">
       <button type="button" role="tab" class="tab" id="tab-trabalho" aria-controls="como-trabalho" aria-selected="true">Como eu trabalho</button>
-      <button type="button" role="tab" class="tab" id="tab-ia" aria-controls="stack-ia" aria-selected="false" tabindex="-1">Stack de IA</button>
+      <button type="button" role="tab" class="tab" id="tab-ia" aria-controls="stack-ia" aria-selected="false" tabindex="-1">Stack</button>
       <button type="button" role="tab" class="tab" id="tab-idiomas" aria-controls="idiomas" aria-selected="false" tabindex="-1">Idiomas</button>
       <button type="button" role="tab" class="tab" id="tab-aprofundar" aria-controls="aprofundar" aria-selected="false" tabindex="-1">O que quero aprofundar</button>
       <button type="button" role="tab" class="tab" id="tab-contato" aria-controls="contato" aria-selected="false" tabindex="-1">Contato</button>
@@ -111,26 +111,15 @@
     </div>
 
     <div class="panel" role="tabpanel" id="stack-ia" aria-labelledby="tab-ia" tabindex="0" hidden>
-      <h2>Stack de IA</h2>
-      <p class="notes-sub">As peças que eu uso para montar agentes e ligar a IA ao mundo real.</p>
-      <ul class="stack">
-        <li>
-          <b>LLMs</b>
-          <p>Claude, GPT e Gemini. Escolho o modelo pelo papel: um rápido e barato para coordenar, um mais forte para desenvolver e um de outro provedor para revisar.</p>
-        </li>
-        <li>
-          <b>MCP</b>
-          <p>Model Context Protocol, o padrão que liga agentes a ferramentas e dados. O LUAN OS expõe 11 ferramentas por MCP, e meus agentes usam MCP para falar com agenda, e-mail e arquivos.</p>
-        </li>
-        <li>
-          <b>Strands Agents</b>
-          <p>SDK open source da AWS para construir agentes em Python a partir de um modelo, um prompt e um conjunto de ferramentas.</p>
-        </li>
-        <li>
-          <b>FastMCP</b>
-          <p>Framework em Python para criar servidores e clientes MCP com pouco código, transformando funções comuns em ferramentas que um agente consegue chamar.</p>
-        </li>
-      </ul>
+      <h2>Stack</h2>
+      <p class="notes-sub">Ferramentas com que eu já trabalhei nos projetos deste fluxograma.</p>
+      <dl class="stack">
+        <div><dt>IA e agentes</dt><dd><span>LLMs: Claude, GPT e Gemini</span><span>MCP</span><span>Claude Code</span><span>Codex</span><span>Engenharia de prompt e de contexto</span></dd></div>
+        <div><dt>Linguagens</dt><dd><span>TypeScript</span><span>Python</span><span>SQL</span><span>Google Apps Script</span><span>C++</span></dd></div>
+        <div><dt>Backend e dados</dt><dd><span>Cloudflare Workers</span><span>Cloudflare D1 (SQLite)</span><span>Drizzle ORM</span><span>esbuild</span></dd></div>
+        <div><dt>Testes e qualidade</dt><dd><span>node:test</span><span>TypeScript (tsc)</span><span>Revisão cruzada entre modelos</span></dd></div>
+        <div><dt>Ferramentas</dt><dd><span>Git e GitHub</span><span>Excel avançado</span><span>Power BI</span><span>Google Workspace</span><span>Canva</span></dd></div>
+      </dl>
     </div>
 
     <div class="panel" role="tabpanel" id="idiomas" aria-labelledby="tab-idiomas" tabindex="0" hidden>
@@ -215,7 +204,7 @@
     </section>
   </noscript>
 
-  <script src="assets/data.js?v=a6"></script>
-  <script src="assets/app.js?v=a6"></script>
+  <script src="assets/data.js?v=a8"></script>
+  <script src="assets/app.js?v=a8"></script>
 </body>
 </html>
