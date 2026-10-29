@@ -1,0 +1,162 @@
+// Conteúdo do fluxograma. Cada equipamento é um projeto ou um bloco da trajetória.
+// status: "operando" (em uso real), "comissionamento" (montado, em testes), "projeto" (planejado/preparado).
+// Coordenadas: d = desenho largo (viewBox 1600x760), m = celular (viewBox 400x1610).
+
+window.PLANT = {
+  person: {
+    name: "Luan de Almeida Lourenço",
+    email: "luanalmeidasccp@gmail.com",
+    linkedin: "https://www.linkedin.com/in/luan-de-almeida",
+    github: "https://github.com/luanalourenco0",
+  },
+
+  // Ordem do tour guiado.
+  tour: ["TK-101", "CR-102", "F-001", "T-201", "R-301", "E-401", "XV-450",
+         "TK-501", "TK-502", "TK-503", "TK-504", "N-900"],
+
+  nodes: [
+    {
+      tag: "TK-101", kind: "tank", name: "Formação", status: "operando",
+      d: [140, 120], m: [100, 90],
+      service: "Base técnica que abastece a planta inteira.",
+      inputs: "Técnico em Química (ETEC de Suzano, 2015–2017), com um ano como auxiliar de laboratório.",
+      outputs: "Engenharia Química na UFSC, com conclusão prevista para 2028.1. Raciocínio de processo: balanço, gargalo, controle e segurança.",
+      instruments: "Excel avançado, Power BI, Python e C++ básicos, inglês B2",
+      notes: "Penso em sistemas de IA como penso em uma planta: o que entra, o que sai, onde controlar e onde travar.",
+    },
+    {
+      tag: "CR-102", kind: "control", name: "Liderança", status: "operando",
+      d: [330, 120], m: [300, 90],
+      service: "Sala de controle: gente, dinheiro e eventos de verdade.",
+      inputs: "Presidente da ATEQA (2022), diretor de eventos da ATCTC (2022–2023), assessor de eventos do CONEEQ (2021), trainee da CONAQ Empresa Júnior (2022).",
+      outputs: "Na ATEQA, o caixa passou de cerca de R$ 4.000 para R$ 12.500 em um ano, com parcerias e eventos.",
+      instruments: "Gestão financeira, coordenação de equipes, negociação de parcerias, logística de eventos",
+      notes: "A mesma lógica que uso com agentes: dividir papéis, definir quem aprova e acompanhar o resultado.",
+    },
+    {
+      tag: "F-001", kind: "feed", name: "Problemas reais", status: "operando",
+      d: [110, 430], m: [70, 330],
+      service: "A matéria-prima: rotina, negócio da família, faculdade e carreira.",
+      inputs: "E-mails e agenda espalhados, vagas para triar, posts para produzir, clientes para prospectar, entregas técnicas da faculdade.",
+      outputs: "Problemas com dono, escopo e critério de pronto, que entram na coluna de contexto.",
+      instruments: "Conversa, anotação e uma pergunta: isso dá para automatizar sem perder o controle?",
+      notes: "Nada aqui é exercício. Cada projeto à direita começou como um incômodo de verdade.",
+    },
+    {
+      tag: "T-201", kind: "column", name: "Cérebro-Luan", status: "operando",
+      d: [330, 430], m: [200, 330],
+      service: "Coluna de destilação de contexto: uma fonte única de verdade para todos os agentes.",
+      inputs: "Notas que chegam de Claude, ChatGPT, Codex e dos bots, cada uma num arquivo de inbox com origem, decisão, evidência e próximo passo.",
+      outputs: "index.md (estado atual), log.md (histórico) e uma ficha por projeto. Um único agente edita; os outros só leem e propõem.",
+      instruments: "Markdown, OneDrive, AGENTS.md e CLAUDE.md, pacotes de contexto para Claude e Gemini",
+      notes: "Resolve o problema de cada IA saber uma versão diferente da história. Separa sempre planejado, preparado, executado e verificado.",
+    },
+    {
+      tag: "R-301", kind: "reactor", name: "Equipe de agentes", status: "comissionamento",
+      d: [590, 430], m: [200, 620],
+      service: "Reator multiagente: cada agente tem papel, modelo e limite de permissão próprios.",
+      inputs: "Luffy (Claude Haiku) como chefe de gabinete e único editor do cérebro; Zoro (Claude Sonnet) desenvolve; Sanji (GPT) audita de forma independente; Brook (GPT) prepara conteúdo; Franky busca oportunidades de carreira.",
+      outputs: "Trabalho dividido por papel, com delegação entre agentes via MCP e aprovação humana antes de qualquer ação externa.",
+      instruments: "Claude e GPT, MCP, conectores do Claude Code",
+      notes: "Status honesto: Luffy e Brook já trabalham no dia a dia. A delegação automática entre os agentes ainda está em testes.",
+    },
+    {
+      tag: "E-401", kind: "exchanger", name: "Revisão cruzada", status: "operando",
+      d: [820, 430], m: [200, 820],
+      service: "Trocador de calor entre modelos: um constrói, outro critica.",
+      inputs: "Claude Code implementa em branch própria, roda testes e entrega um resumo com riscos e o que não foi testado.",
+      outputs: "Codex revisa de forma independente. Correções voltam ao reator pela linha de reciclo até passar.",
+      instruments: "Claude Code, Codex, Git, testes automatizados",
+      notes: "Dois provedores diferentes erram de jeitos diferentes. É isso que torna a revisão útil.",
+    },
+    {
+      tag: "XV-450", kind: "valve", name: "Intertravamento humano", status: "operando",
+      d: [1010, 430], m: [200, 990],
+      service: "Válvula que só abre com aprovação explícita.",
+      inputs: "Qualquer ação irreversível ou externa: enviar, publicar, agendar, fazer merge, deploy ou gastar.",
+      outputs: "Ação liberada com registro de quem aprovou e quando. Sem aprovação, a linha fica fechada.",
+      instruments: "Regras escritas em AGENTS.md e CLAUDE.md, pedidos de permissão nas ferramentas MCP",
+      notes: "Este portfólio passou por ela: foi construído por IA e só foi publicado depois que eu revisei.",
+    },
+    {
+      tag: "TK-501", kind: "tank", name: "LUAN OS", status: "operando", featured: true,
+      d: [1300, 140], m: [110, 1150],
+      service: "Meu painel diário: agenda, tarefas, prazos, resumos de e-mail e radar de vagas num só lugar, que qualquer agente meu também consegue ler.",
+      problem: "Começar o dia abrindo cinco abas e perguntando a cada IA o que eu tinha para fazer. Cada uma respondia com um pedaço diferente.",
+      inputs: "Rotinas agendadas leem calendário e Gmail em modo somente leitura e publicam snapshots. O painel valida cada um antes de aceitar.",
+      outputs: "Painel que se atualiza sozinho às 07h e às 19h, e um servidor MCP para Claude e outros agentes consultarem e mexerem nas tarefas.",
+      extra: [
+        ["Arquitetura", "Worker em TypeScript com banco D1 (SQLite) como fonte única da verdade. Snapshots de agenda, resumos e vagas são importados sem nunca regredir um registro mais novo."],
+        ["MCP", "7 ferramentas de leitura (get_today, get_agenda, get_deadlines, get_tasks, get_briefing, get_job_radar, get_core_health) e 4 de escrita (criar, editar, concluir e excluir tarefa), cada escrita com ID de operação e número de revisão para não duplicar nem sobrescrever."],
+        ["Decisões", "Fonte indisponível vira erro explícito, nunca lista vazia fingindo ser fato. Dado antigo vem marcado como desatualizado. O radar de vagas só sugere e nunca se candidata sozinho."],
+        ["Prazo", "Três sprints entre 22/09 e 02/10/2026. Em 02/10, o ciclo completo de criar, editar, concluir e excluir tarefa foi validado pelo plugin no ambiente real."],
+        ["Qualidade", "Mais de 110 testes automatizados (node:test) cobrindo validadores, importação, MCP, escritas e interface, além de checagem de tipos com tsc."],
+      ],
+      instruments: "TypeScript, Cloudflare D1, Drizzle ORM, esbuild, node:test, MCP, Claude Code e Codex",
+      notes: "Uso todo dia. A versão pessoal é privada porque lida com meus dados; uma versão pública com dados sintéticos está a caminho.",
+      // Preencher com a URL da versão pública quando ela for publicada; vazio esconde a linha.
+      demo: "",
+    },
+    {
+      tag: "TK-502", kind: "tank", name: "Luz & Encanto", status: "operando",
+      d: [1480, 300], m: [290, 1150],
+      service: "Esteira de conteúdo para o Instagram do artesanato da minha mãe (@luz.encanto.artesanal).",
+      inputs: "Fotos das peças e datas comemorativas.",
+      outputs: "Lotes de posts com arte e legenda para aprovação, agendados no Meta às 18h30, sem impulsionamento.",
+      instruments: "Codex, Canva, agendamento do Meta, um bot dedicado (Brook) para artes e legendas",
+      notes: "Quem decide o que vai ao ar é ela. O agente prepara e espera aprovação.",
+    },
+    {
+      tag: "TK-503", kind: "tank", name: "Criação de sites com agentes de IA", status: "operando",
+      d: [1300, 470], m: [110, 1340],
+      service: "Pequeno negócio: sites para profissionais autônomos, construídos com agentes de IA.",
+      inputs: "O que o profissional precisa mostrar on-line e como os clientes dele procuram esse serviço.",
+      outputs: "Sites prontos, mais o kit comercial: planilha de prospecção, roteiro de abordagem, proposta e material de divulgação.",
+      instruments: "Claude, Codex, Google Drive e Planilhas",
+      notes: "Eu cuido da prospecção e da venda. Nenhum contato com cliente sai sem a minha revisão.",
+    },
+    {
+      tag: "TK-504", kind: "tank", name: "Documentos técnicos", status: "operando",
+      d: [1480, 620], m: [290, 1340],
+      service: "IA aplicada à engenharia do dia a dia.",
+      inputs: "Um fluxograma de processo de ácido nítrico em Visio com arquivo corrompido.",
+      outputs: "Arquivo reparado e validado por script Python antes da entrega, mais um padrão reutilizável para PDFs técnicos.",
+      instruments: "Python, Visio (VDX), PyMuPDF",
+      notes: "Mesma regra dos outros projetos: só entrego depois de conferir o resultado contra a referência.",
+    },
+    {
+      tag: "N-900", kind: "outlet", name: "Fale comigo", status: "operando",
+      d: [1010, 640], m: [200, 1530],
+      service: "Bocal de saída: o produto vai para você.",
+      inputs: "Uma vaga, um problema de negócio ou uma ideia para automatizar.",
+      outputs: "Uma conversa. Respondo por e-mail ou LinkedIn.",
+      instruments: "contact",
+      notes: "Estou buscando estágio a partir de 2027 em times que constroem com IA.",
+    },
+  ],
+
+  // Tipos de linha: process (processo), utility (utilidade), signal (sinal), recycle (reciclo).
+  pipes: [
+    { from: "TK-101", to: "T-201", type: "utility", d: { route: "vhv", mid: 250 }, m: { route: "vhv", mid: 190 } },
+    { from: "CR-102", to: "T-201", type: "utility", d: { route: "v" }, m: { route: "vhv", mid: 190 } },
+    { from: "CR-102", to: "R-301", type: "signal", d: { route: "hv" }, m: { pts: [[300, 90], [370, 90], [370, 580], [262, 580]] } },
+    { from: "F-001", to: "T-201", type: "process", d: { route: "h" }, m: { route: "h" } },
+    { from: "T-201", to: "R-301", type: "process", d: { route: "h" }, m: { route: "v" } },
+    { from: "R-301", to: "E-401", type: "process", d: { route: "h" }, m: { route: "v" } },
+    { from: "E-401", to: "R-301", type: "recycle", label: "reciclo de correções",
+      d: { pts: [[820, 430], [820, 300], [630, 300], [630, 430]] }, m: { pts: [[200, 820], [40, 820], [40, 620], [138, 620]] } },
+    { from: "E-401", to: "XV-450", type: "process", d: { route: "h" }, m: { route: "v" } },
+    { from: "XV-450", to: "N-900", type: "process", d: { route: "v" }, m: { route: "v" } },
+    ...["TK-501", "TK-502", "TK-503", "TK-504"].map((t, i) => ({
+      from: "XV-450", to: t, type: "process",
+      d: { route: "hvh", mid: 1160 },
+      m: { trunk: i % 2 === 0 ? 20 : 380, split: 1070 },
+    })),
+  ],
+
+  gauges: [
+    { letters: "AI", value: "5", label: "agentes com papel definido" },
+    { letters: "FI", value: "2×", label: "atualizações do painel por dia" },
+    { letters: "HS", value: "1", label: "humano aprovando tudo" },
+  ],
+};

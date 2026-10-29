@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Luan Lourenço: planta de agentes</title>
+  <meta name="description" content="Portfólio de Luan de Almeida Lourenço, estudante de Engenharia Química na UFSC que constrói sistemas com agentes de IA. Navegue pelo fluxograma de processo interativo.">
+  <meta property="og:title" content="Luan Lourenço: planta de agentes">
+  <meta property="og:description" content="Engenharia química que virou engenharia de agentes. Um fluxograma interativo dos meus projetos com IA.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#E4EBE7">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css?v=a2">
+  <script>
+    try { var t = localStorage.getItem("planta-tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#texto">Pular para a versão em texto</a>
+
+  <div class="sheet">
+    <header class="head">
+      <div class="intro">
+        <h1>Luan de Almeida Lourenço</h1>
+        <p class="lede">Estudo Engenharia Química na UFSC e construo sistemas com agentes de IA. Este é o fluxograma de como eu trabalho. Cada equipamento é um projeto real: clique para abrir a folha de dados.</p>
+        <nav class="links" aria-label="Contato">
+          <a href="https://github.com/luanalourenco0">GitHub</a>
+          <a href="https://www.linkedin.com/in/luan-de-almeida">LinkedIn</a>
+          <a href="mailto:luanalmeidasccp@gmail.com">E-mail</a>
+          <button type="button" class="linklike linklike--case" data-open="TK-501">Ver o case LUAN OS</button>
+          <a href="#como-trabalho">Como eu trabalho</a>
+          <button type="button" class="linklike" data-action="texto">Ler em texto</button>
+        </nav>
+      </div>
+
+      <div class="side">
+        <div class="controls">
+          <button type="button" id="run" class="btn btn--run" aria-pressed="false">Partir a planta</button>
+          <button type="button" id="tour" class="btn">Fazer o tour</button>
+          <button type="button" id="theme" class="btn btn--icon" aria-label="Alternar sala de controle noturna">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+          </button>
+        </div>
+        <dl class="legend" aria-label="Legenda do desenho">
+          <div><dt><svg viewBox="0 0 40 8"><line x1="0" y1="4" x2="40" y2="4" class="lg lg--process"/></svg></dt><dd>Processo</dd></div>
+          <div><dt><svg viewBox="0 0 40 8"><line x1="0" y1="4" x2="40" y2="4" class="lg lg--utility"/></svg></dt><dd>Utilidade</dd></div>
+          <div><dt><svg viewBox="0 0 40 8"><line x1="0" y1="4" x2="40" y2="4" class="lg lg--signal"/></svg></dt><dd>Sinal de controle</dd></div>
+          <div><dt><svg viewBox="0 0 40 8"><line x1="0" y1="4" x2="40" y2="4" class="lg lg--recycle"/></svg></dt><dd>Reciclo</dd></div>        </dl>
+      </div>
+    </header>
+
+    <figure class="drawing">
+      <svg id="plant" class="plant" role="group" aria-label="Fluxograma interativo dos projetos de Luan"></svg>
+      <figcaption class="sr-only">Fluxograma de processo em que cada equipamento representa um projeto. A mesma informação está na versão em texto.</figcaption>
+    </figure>
+
+    <footer class="foot">
+      <section class="console" aria-label="Console da planta">
+        <ol id="log" class="log" aria-live="polite"></ol>
+        <form id="prompt" class="prompt" autocomplete="off">
+          <label for="cmd" class="ps1">luan@planta:~$</label>
+          <input id="cmd" name="cmd" type="text" spellcheck="false" placeholder="digite ajuda" aria-label="Comando">
+        </form>
+      </section>
+
+      <ul class="gauges" id="gauges" aria-label="Indicadores"></ul>
+
+      <table class="titleblock">
+        <caption class="sr-only">Carimbo do desenho</caption>
+        <tr><th scope="row">Projeto</th><td colspan="3">Portfólio de Luan de Almeida Lourenço</td></tr>
+        <tr><th scope="row">Desenho nº</th><td>LAL-PFD-001</td><th scope="row">Rev.</th><td>A, out/2026</td></tr>
+        <tr><th scope="row">Desenhado</th><td>Claude Code</td><th scope="row">Aprovado</th><td>Luan</td></tr>
+        <tr><th scope="row">Escala</th><td>Sem escala</td><th scope="row">Folha</th><td>1 de 1</td></tr>
+      </table>
+    </footer>
+  </div>
+
+  <section class="notes" id="como-trabalho" aria-label="Como eu trabalho e o que quero aprofundar">
+    <div class="notes-col">
+      <h2>Notas gerais</h2>
+      <p class="notes-sub">Não é uma lista de soft skills. É como eu trabalho, escrito como as notas de um desenho de processo.</p>
+      <ol class="general-notes">
+        <li><b>Começo pelo problema, não pela ferramenta.</b> Antes de abrir qualquer IA, escrevo o que entra, o que sai e como vou saber que deu certo. Herança da engenharia química: todo processo começa no balanço.</li>
+        <li><b>Uma fonte de verdade.</b> Se três agentes sabem versões diferentes da história, o erro é meu. Por isso tudo converge para um único lugar, o Cérebro-Luan.</li>
+        <li><b>Planejado não é feito.</b> Separo planejado, preparado, executado e verificado. Só digo que funcionou depois de ver a evidência.</li>
+        <li><b>Quem constrói não revisa.</b> Um modelo implementa, outro modelo, de outro provedor, critica, e eu decido.</li>
+        <li><b>Ação externa só com aprovação.</b> Enviar, publicar, gastar ou apagar passa por mim. Automação boa é a que eu consigo desligar.</li>
+        <li><b>Pequeno e em uso vence perfeito no papel.</b> O LUAN OS saiu em três sprints, em dez dias, e melhora com o uso diário.</li>
+      </ol>
+    </div>
+    <div class="notes-col">
+      <h2>Próximas revisões</h2>
+      <p class="notes-sub">O que eu quero aprofundar daqui para a frente.</p>
+      <table class="revisions">
+        <thead><tr><th scope="col">Rev.</th><th scope="col">Descrição</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">B</th><td><b>Orquestração de agentes.</b> Memória, delegação e avaliação de agentes trabalhando em equipe, sem perder o controle de quem faz o quê.</td></tr>
+          <tr><th scope="row">C</th><td><b>Automação de processos de negócio.</b> Ligar agentes às ferramentas que os times já usam, com n8n e Make, e medir as horas que isso devolve.</td></tr>
+          <tr><th scope="row">D</th><td><b>Análise de dados com IA.</b> Sair da planilha e do Power BI para perguntas em linguagem natural sobre dados reais, com a fonte sempre à vista.</td></tr>
+          <tr><th scope="row">E</th><td><b>Produto.</b> Transformar uma ferramenta que eu uso numa que outra pessoa usa sem eu precisar explicar.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <aside id="datasheet" class="datasheet" aria-labelledby="ds-title" aria-hidden="true" inert>
+    <div class="ds-head">
+      <p class="ds-kicker">Folha de dados</p>
+      <h2 id="ds-title" tabindex="-1"><span class="ds-tag"></span><span class="ds-name"></span></h2>
+      <button type="button" class="btn btn--icon ds-close" aria-label="Fechar folha de dados">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <table class="ds-table"><tbody></tbody></table>
+    <div class="ds-foot">
+      <button type="button" class="btn ds-prev">Anterior</button>
+      <span class="ds-count"></span>
+      <button type="button" class="btn ds-next">Próximo</button>
+    </div>
+  </aside>
+
+  <section id="texto" class="texto" hidden aria-labelledby="texto-title">
+    <h2 id="texto-title">Versão em texto</h2>
+    <p>O mesmo conteúdo do fluxograma, em ordem de leitura.</p>
+    <div id="texto-list"></div>
+  </section>
+
+  <noscript>
+    <section class="texto">
+      <h2>Luan de Almeida Lourenço</h2>
+      <p>Estudante de Engenharia Química na UFSC (conclusão prevista em 2028.1). Construo sistemas com agentes de IA: LUAN OS (painel diário com servidor MCP), Cérebro-Luan (fonte única de contexto para vários agentes), uma equipe de agentes Claude e GPT com papéis definidos e revisão cruzada entre Claude Code e Codex, sempre com aprovação humana antes de qualquer ação externa.</p>
+      <p>Contato: <a href="mailto:luanalmeidasccp@gmail.com">luanalmeidasccp@gmail.com</a> ou <a href="https://www.linkedin.com/in/luan-de-almeida">LinkedIn</a>.</p>
+    </section>
+  </noscript>
+
+  <script src="assets/data.js?v=a2"></script>
+  <script src="assets/app.js?v=a2"></script>
+</body>
+</html>
