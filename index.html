@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=a3">
+  <link rel="stylesheet" href="assets/styles.css?v=a6">
   <script>
     try { var t = localStorage.getItem("planta-tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
@@ -24,16 +24,18 @@
   <div class="sheet">
     <header class="head">
       <div class="intro">
-        <h1>Luan de Almeida Lourenço</h1>
-        <p class="lede">Estudo Engenharia Química na UFSC e construo sistemas com agentes de IA. Este é o fluxograma de como eu trabalho. Cada equipamento é um projeto real: clique para abrir a folha de dados.</p>
+        <div class="id-row">
+          <!-- Foto de perfil: salve como assets/foto.jpg. Sem o arquivo, o espaço some. -->
+          <img class="avatar" src="assets/foto.jpg" alt="Foto de Luan de Almeida Lourenço" width="64" height="64" hidden onload="this.hidden = false">
+          <h1>Luan de Almeida Lourenço</h1>
+        </div>
+        <p class="lede">Estudo Engenharia Química na UFSC e construo sistemas com agentes de IA. Cada equipamento deste fluxograma é um projeto real: clique para abrir a folha de dados.</p>
         <nav class="links" aria-label="Contato">
           <a href="https://github.com/luanalourenco0">GitHub</a>
           <a href="https://www.linkedin.com/in/luan-de-almeida">LinkedIn</a>
           <a href="mailto:luanalmeidasccp@gmail.com">Gmail</a>
           <button type="button" class="linklike linklike--case" data-open="TK-501">Ver o case LUAN OS</button>
-          <a href="#como-trabalho">Como eu trabalho</a>
-          <a href="#idiomas">Idiomas</a>
-          <a href="#contato">Contato</a>
+          <a href="#sobre">Sobre mim</a>
           <button type="button" class="linklike" data-action="texto">Ler em texto</button>
         </nav>
       </div>
@@ -50,7 +52,13 @@
           <div><dt><svg viewBox="0 0 40 8"><line x1="0" y1="4" x2="40" y2="4" class="lg lg--process"/></svg></dt><dd>Processo</dd></div>
           <div><dt><svg viewBox="0 0 40 8"><line x1="0" y1="4" x2="40" y2="4" class="lg lg--utility"/></svg></dt><dd>Utilidade</dd></div>
           <div><dt><svg viewBox="0 0 40 8"><line x1="0" y1="4" x2="40" y2="4" class="lg lg--signal"/></svg></dt><dd>Sinal de controle</dd></div>
-          <div><dt><svg viewBox="0 0 40 8"><line x1="0" y1="4" x2="40" y2="4" class="lg lg--recycle"/></svg></dt><dd>Reciclo</dd></div>        </dl>
+          <div><dt><svg viewBox="0 0 40 8"><line x1="0" y1="4" x2="40" y2="4" class="lg lg--recycle"/></svg></dt><dd>Reciclo</dd></div>
+        </dl>
+        <div class="filters" role="group" aria-label="Destacar projetos por status">
+          <button type="button" class="filter filter--diario" data-filter="diario" aria-pressed="false">● Uso diário</button>
+          <button type="button" class="filter filter--finalizado" data-filter="finalizado" aria-pressed="false">✓ Finalizado</button>
+          <button type="button" class="filter filter--desenvolvimento" data-filter="desenvolvimento" aria-pressed="false">◐ Em desenvolvimento</button>
+        </div>
       </div>
     </header>
 
@@ -83,6 +91,7 @@
   <section class="about" id="sobre" aria-label="Sobre mim">
     <div class="tabs" role="tablist" aria-label="Sobre mim">
       <button type="button" role="tab" class="tab" id="tab-trabalho" aria-controls="como-trabalho" aria-selected="true">Como eu trabalho</button>
+      <button type="button" role="tab" class="tab" id="tab-ia" aria-controls="stack-ia" aria-selected="false" tabindex="-1">Stack de IA</button>
       <button type="button" role="tab" class="tab" id="tab-idiomas" aria-controls="idiomas" aria-selected="false" tabindex="-1">Idiomas</button>
       <button type="button" role="tab" class="tab" id="tab-aprofundar" aria-controls="aprofundar" aria-selected="false" tabindex="-1">O que quero aprofundar</button>
       <button type="button" role="tab" class="tab" id="tab-contato" aria-controls="contato" aria-selected="false" tabindex="-1">Contato</button>
@@ -99,6 +108,29 @@
         <li><b>Organização é o que deixa crescer.</b> Uma fonte única de verdade, cada tarefa com dono e um status claro: planejado, preparado, executado ou verificado. Foi assim que o caixa da ATEQA foi de R$ 4 mil para R$ 12,5 mil, e é assim que coordeno cinco agentes ao mesmo tempo.</li>
         <li><b>A palavra final é humana.</b> Um modelo constrói, outro revisa, e eu decido. Enviar, publicar, gastar ou apagar sempre passa por mim.</li>
       </ol>
+    </div>
+
+    <div class="panel" role="tabpanel" id="stack-ia" aria-labelledby="tab-ia" tabindex="0" hidden>
+      <h2>Stack de IA</h2>
+      <p class="notes-sub">As peças que eu uso para montar agentes e ligar a IA ao mundo real.</p>
+      <ul class="stack">
+        <li>
+          <b>LLMs</b>
+          <p>Claude, GPT e Gemini. Escolho o modelo pelo papel: um rápido e barato para coordenar, um mais forte para desenvolver e um de outro provedor para revisar.</p>
+        </li>
+        <li>
+          <b>MCP</b>
+          <p>Model Context Protocol, o padrão que liga agentes a ferramentas e dados. O LUAN OS expõe 11 ferramentas por MCP, e meus agentes usam MCP para falar com agenda, e-mail e arquivos.</p>
+        </li>
+        <li>
+          <b>Strands Agents</b>
+          <p>SDK open source da AWS para construir agentes em Python a partir de um modelo, um prompt e um conjunto de ferramentas.</p>
+        </li>
+        <li>
+          <b>FastMCP</b>
+          <p>Framework em Python para criar servidores e clientes MCP com pouco código, transformando funções comuns em ferramentas que um agente consegue chamar.</p>
+        </li>
+      </ul>
     </div>
 
     <div class="panel" role="tabpanel" id="idiomas" aria-labelledby="tab-idiomas" tabindex="0" hidden>
@@ -183,7 +215,7 @@
     </section>
   </noscript>
 
-  <script src="assets/data.js?v=a3"></script>
-  <script src="assets/app.js?v=a3"></script>
+  <script src="assets/data.js?v=a6"></script>
+  <script src="assets/app.js?v=a6"></script>
 </body>
 </html>

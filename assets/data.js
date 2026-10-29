@@ -1,5 +1,6 @@
 // Conteúdo do fluxograma. Cada equipamento é um projeto ou um bloco da trajetória.
-// status: "operando" (em uso real), "comissionamento" (montado, em testes), "projeto" (planejado/preparado).
+// status: "diario" (uso todo dia), "finalizado" (entregue), "desenvolvimento" (funciona em parte, ainda evoluindo).
+// Sem status: blocos da trajetória que não são projetos.
 // Coordenadas: d = desenho largo (viewBox 1600x760), m = celular (viewBox 400x1610).
 
 window.PLANT = {
@@ -16,7 +17,7 @@ window.PLANT = {
 
   nodes: [
     {
-      tag: "TK-101", kind: "tank", name: "Formação", status: "operando",
+      tag: "TK-101", kind: "tank", name: "Formação", 
       d: [140, 120], m: [100, 90],
       service: "Base técnica que abastece a planta inteira.",
       inputs: "Técnico em Química (ETEC de Suzano, 2015–2017), com um ano como auxiliar de laboratório.",
@@ -25,7 +26,7 @@ window.PLANT = {
       notes: "Penso em sistemas de IA como penso em uma planta: o que entra, o que sai, onde controlar e onde travar.",
     },
     {
-      tag: "CR-102", kind: "control", name: "Liderança", status: "operando",
+      tag: "CR-102", kind: "control", name: "Liderança", status: "finalizado",
       d: [330, 120], m: [300, 90],
       service: "Sala de controle: gente, dinheiro e eventos de verdade.",
       inputs: "Presidente da ATEQA (2022), diretor de eventos da ATCTC (2022–2023), assessor de eventos do CONEEQ (2021), trainee da CONAQ Empresa Júnior (2022).",
@@ -34,7 +35,7 @@ window.PLANT = {
       notes: "A mesma lógica que uso com agentes: dividir papéis, definir quem aprova e acompanhar o resultado.",
     },
     {
-      tag: "F-001", kind: "feed", name: "Problemas reais", status: "operando",
+      tag: "F-001", kind: "feed", name: "Problemas reais", 
       d: [110, 430], m: [70, 330],
       service: "A matéria-prima: rotina, negócio da família, faculdade e carreira.",
       inputs: "E-mails e agenda espalhados, vagas para triar, posts para produzir, clientes para prospectar, entregas técnicas da faculdade.",
@@ -43,7 +44,7 @@ window.PLANT = {
       notes: "Nada aqui é exercício. Cada projeto à direita começou como um incômodo de verdade.",
     },
     {
-      tag: "T-201", kind: "column", name: "Cérebro-Luan", status: "operando",
+      tag: "T-201", kind: "column", name: "Cérebro-Luan", status: "diario",
       d: [330, 430], m: [200, 330],
       service: "Coluna de destilação de contexto: uma fonte única de verdade para todos os agentes.",
       inputs: "Notas que chegam de Claude, ChatGPT, Codex e dos bots, cada uma num arquivo de inbox com origem, decisão, evidência e próximo passo.",
@@ -52,16 +53,16 @@ window.PLANT = {
       notes: "Resolve o problema de cada IA saber uma versão diferente da história. Separa sempre planejado, preparado, executado e verificado.",
     },
     {
-      tag: "R-301", kind: "reactor", name: "Equipe de agentes", status: "comissionamento",
+      tag: "R-301", kind: "reactor", name: "Equipe de agentes", status: "desenvolvimento",
       d: [590, 430], m: [200, 620],
       service: "Reator multiagente: cada agente tem papel, modelo e limite de permissão próprios.",
       inputs: "Luffy (Claude Haiku) como chefe de gabinete e único editor do cérebro; Zoro (Claude Sonnet) desenvolve; Sanji (GPT) audita de forma independente; Brook (GPT) prepara conteúdo; Franky busca oportunidades de carreira.",
       outputs: "Trabalho dividido por papel, com delegação entre agentes via MCP e aprovação humana antes de qualquer ação externa.",
       instruments: "Claude e GPT, MCP, conectores do Claude Code",
-      notes: "Status honesto: Luffy e Brook já trabalham no dia a dia. A delegação automática entre os agentes ainda está em testes.",
+      notes: "Em desenvolvimento: Luffy e Brook já trabalham no dia a dia; a delegação automática entre os agentes ainda está em testes.",
     },
     {
-      tag: "E-401", kind: "exchanger", name: "Revisão cruzada", status: "operando",
+      tag: "E-401", kind: "exchanger", name: "Revisão cruzada", status: "diario",
       d: [820, 430], m: [200, 820],
       service: "Trocador de calor entre modelos: um constrói, outro critica.",
       inputs: "Claude Code implementa em branch própria, roda testes e entrega um resumo com riscos e o que não foi testado.",
@@ -70,7 +71,7 @@ window.PLANT = {
       notes: "Dois provedores diferentes erram de jeitos diferentes. É isso que torna a revisão útil.",
     },
     {
-      tag: "XV-450", kind: "valve", name: "Intertravamento humano", status: "operando",
+      tag: "XV-450", kind: "valve", name: "Intertravamento humano", status: "diario",
       d: [1010, 430], m: [200, 990],
       service: "Válvula que só abre com aprovação explícita.",
       inputs: "Qualquer ação irreversível ou externa: enviar, publicar, agendar, fazer merge, deploy ou gastar.",
@@ -79,7 +80,7 @@ window.PLANT = {
       notes: "Este portfólio passou por ela: foi construído por IA e só foi publicado depois que eu revisei.",
     },
     {
-      tag: "TK-501", kind: "tank", name: "LUAN OS", status: "operando", featured: true,
+      tag: "TK-501", kind: "tank", name: "LUAN OS", status: "diario", featured: true,
       d: [1300, 140], m: [110, 1150],
       service: "Meu painel diário: agenda, tarefas, prazos, resumos de e-mail e radar de vagas num só lugar, que qualquer agente meu também consegue ler.",
       problem: "Começar o dia abrindo cinco abas e perguntando a cada IA o que eu tinha para fazer. Cada uma respondia com um pedaço diferente.",
@@ -98,16 +99,16 @@ window.PLANT = {
       demo: "",
     },
     {
-      tag: "TK-502", kind: "tank", name: "Luz & Encanto", status: "operando",
+      tag: "TK-502", kind: "tank", name: "Luz & Encanto", status: "finalizado",
       d: [1480, 300], m: [290, 1150],
-      service: "Esteira de conteúdo para o Instagram do artesanato da minha mãe (@luz.encanto.artesanal).",
-      inputs: "Fotos das peças e datas comemorativas.",
-      outputs: "Lotes de posts com arte e legenda para aprovação, agendados no Meta às 18h30, sem impulsionamento.",
-      instruments: "Codex, Canva, agendamento do Meta, um bot dedicado (Brook) para artes e legendas",
-      notes: "Quem decide o que vai ao ar é ela. O agente prepara e espera aprovação.",
+      service: "Criação de marca a partir de produtos reais, 100% feita por agentes de IA, para o artesanato da minha mãe (@luz.encanto.artesanal).",
+      inputs: "Fotos dos produtos reais que ela faz à mão.",
+      outputs: "Identidade da marca, capa e destaques do perfil, artes e legendas dos posts, tudo produzido por agentes e aprovado por ela antes de ir ao ar.",
+      instruments: "Codex, Canva, agendamento do Meta e um agente dedicado (Brook) para artes e legendas",
+      notes: "Da foto do produto ao post no ar, sem designer: os agentes criam, ela aprova.",
     },
     {
-      tag: "TK-503", kind: "tank", name: "Criação de sites com agentes de IA", status: "operando",
+      tag: "TK-503", kind: "tank", name: "Criação de sites com agentes de IA", status: "desenvolvimento",
       d: [1300, 470], m: [110, 1340],
       service: "Pequeno negócio: sites para profissionais autônomos, construídos com agentes de IA.",
       inputs: "O que o profissional precisa mostrar on-line e como os clientes dele procuram esse serviço.",
@@ -116,7 +117,7 @@ window.PLANT = {
       notes: "Eu cuido da prospecção e da venda. Nenhum contato com cliente sai sem a minha revisão.",
     },
     {
-      tag: "TK-504", kind: "tank", name: "Documentos técnicos", status: "operando",
+      tag: "TK-504", kind: "tank", name: "Documentos técnicos", status: "finalizado",
       d: [1480, 620], m: [290, 1340],
       service: "IA aplicada à engenharia do dia a dia.",
       inputs: "Um fluxograma de processo de ácido nítrico em Visio com arquivo corrompido.",
@@ -125,7 +126,7 @@ window.PLANT = {
       notes: "Mesma regra dos outros projetos: só entrego depois de conferir o resultado contra a referência.",
     },
     {
-      tag: "N-900", kind: "outlet", name: "Fale comigo", status: "operando",
+      tag: "N-900", kind: "outlet", name: "Fale comigo", 
       d: [1010, 640], m: [200, 1530],
       service: "Bocal de saída: o produto vai para você.",
       inputs: "Uma vaga, um problema de negócio ou uma ideia para automatizar.",

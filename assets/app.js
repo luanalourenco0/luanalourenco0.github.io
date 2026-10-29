@@ -12,11 +12,13 @@
 
   // Meia altura de cada símbolo, usada para posicionar os rótulos abaixo dele.
   const HALF = { tank: 50, column: 115, reactor: 70, exchanger: 46, valve: 18, control: 42, feed: 24, compressor: 42, outlet: 26 };
-  const STATUS_TEXT = { comissionamento: "em comissionamento", projeto: "em projeto" };
+  // Meia largura de cada símbolo, usada para o personagem parar ao lado do equipamento.
+  const HALF_W = { tank: 48, column: 34, reactor: 62, exchanger: 46, valve: 30, control: 62, feed: 60, compressor: 42, outlet: 64 };
+  const STATUS_TEXT = { diario: "● uso diário", finalizado: "✓ finalizado", desenvolvimento: "◐ em desenvolvimento" };
   const STATUS_LONG = {
-    operando: "Em operação",
-    comissionamento: "Em comissionamento: montado, ainda em testes",
-    projeto: "Em projeto: planejado ou preparado, ainda não operando",
+    diario: "Uso diário: uso isso todo dia",
+    finalizado: "Finalizado: entregue e concluído",
+    desenvolvimento: "Em desenvolvimento: já funciona em parte e continua evoluindo",
   };
 
   let layout = mq.matches ? "m" : "d";
@@ -26,7 +28,8 @@
 
   // ---------- Símbolos ----------
   function symbol(n) {
-    const lvl = { "TK-101": 0.85, "TK-501": 0.7, "TK-502": 0.25, "TK-503": 0.6, "TK-504": 0.55, "TK-505": 0.15, "TK-506": 0.45 }[n.tag] || 0.5;
+    // Nível do tanque conta o status: uso diário quase cheio, em desenvolvimento pela metade.
+    const lvl = { diario: 0.85, finalizado: 0.7, desenvolvimento: 0.4 }[n.status] || 0.6;
     const clip = "clip-" + n.tag;
     switch (n.kind) {
       case "tank":
@@ -158,7 +161,8 @@
     P.nodes.forEach((n) => {
       const [x, y] = n[layout];
       const g = el("g", {
-        class: `node node--${n.status}${n.featured ? " node--featured" : ""}`,
+        class: `node node--${n.status || "trajetoria"}${n.featured ? " node--featured" : ""}`,
+        "data-status": n.status || "",
         transform: `translate(${x} ${y})`,
         tabindex: "0",
         role: "button",
@@ -205,6 +209,133 @@
       setTimeout(() => svg.classList.remove("is-drawing"), 2600);
     }
     if (current) mark(current.tag);
+    buildChar();
+    const start = current ? current.tag : charTag || (layout === "d" ? "F-001" : "TK-101");
+    charTag = null;
+    placeChar(start, false, current ? sayFor(current) : ["Oi! Eu sou o Luan.", "Clique em mim ou num equipamento."]);
+  }
+
+  // ---------- Personagem: o Luan de jaleco que anda até cada equipamento ----------
+  // Desenhado com os pés em (0,0), virado para a direita (+x). O braço da frente aponta.
+  const CHAR_SVG = `
+    <ellipse class="ch-shadow" cx="0" cy="0" rx="18" ry="3"/>
+    <g class="ch-leg ch-leg--l"><rect class="ch-pants" x="-9" y="-30" width="7" height="27" rx="2"/><rect class="ch-shoe" x="-12" y="-5" width="11" height="5" rx="2"/></g>
+    <g class="ch-leg ch-leg--r"><rect class="ch-pants" x="2" y="-30" width="7" height="27" rx="2"/><rect class="ch-shoe" x="1" y="-5" width="11" height="5" rx="2"/></g>
+    <g class="ch-arm-back">
+      <rect class="ch-coat" x="-21" y="-63" width="7" height="22" rx="3"/>
+      <rect class="ch-board" x="-28" y="-47" width="11" height="14" rx="1"/><rect class="ch-paper" x="-26.5" y="-45" width="8" height="10"/>
+      <circle class="ch-skin" cx="-17.5" cy="-39" r="3.2"/>
+    </g>
+    <path class="ch-coat" d="M-15,-67 Q-20,-65 -20,-57 L-19,-26 L19,-26 L20,-57 Q20,-65 15,-67 Z"/>
+    <path class="ch-shirt" d="M-6,-67 L0,-57 L6,-67 Z"/>
+    <path class="ch-line" d="M-6,-67 L-2,-48 M6,-67 L2,-48 M0,-50 L0,-27"/>
+    <rect class="ch-badge" x="-15" y="-52" width="10" height="5" rx="1"/>
+    <rect class="ch-line" x="7" y="-47" width="8" height="7"/><line class="ch-pen" x1="9" y1="-49" x2="9" y2="-44"/>
+    <rect class="ch-skin" x="-4" y="-73" width="8" height="7"/>
+    <circle class="ch-skin" cx="-12" cy="-82" r="3"/><circle class="ch-skin" cx="12" cy="-82" r="3"/>
+    <ellipse class="ch-skin" cx="0" cy="-82" rx="12" ry="13.5"/>
+    <path class="ch-hair" d="M-12.5,-85 Q-13,-97.5 0,-97.5 Q13,-97.5 12.5,-85 Q10,-91.5 0,-92 Q-10,-91.5 -12.5,-85 Z"/>
+    <path class="ch-hair" d="M-12,-84 Q-12.5,-71 0,-68.5 Q12.5,-71 12,-84 Q10,-76 6,-75.5 Q3,-78.5 0,-78 Q-3,-78.5 -6,-75.5 Q-10,-76 -12,-84 Z"/>
+    <path class="ch-lip" d="M-3.5,-74.8 Q0,-73.2 3.5,-74.8"/>
+    <path class="ch-brow" d="M-8.5,-87 L-3,-87.6 M3,-87.6 L8.5,-87"/>
+    <g class="ch-eyes"><circle class="ch-eye" cx="-4.5" cy="-83" r="1.5"/><circle class="ch-eye" cx="4.5" cy="-83" r="1.5"/></g>
+    <rect class="ch-goggles" x="-11" y="-94.5" width="22" height="5.5" rx="2.7"/>
+    <g class="ch-arm">
+      <rect class="ch-coat" x="13" y="-63" width="7" height="22" rx="3"/>
+      <circle class="ch-skin" cx="16.5" cy="-39" r="3.2"/>
+    </g>`;
+  const CHAR_H = 100; // altura do desenho em unidades do personagem
+  const SAY = {
+    diario: "Uso isso todo dia.",
+    finalizado: "Esse já foi entregue.",
+    desenvolvimento: "Ainda estou construindo.",
+  };
+  let ch = null;
+  let charTag = null;
+  let walkTimer = 0;
+
+  function buildChar() {
+    ch = el("g", { class: "char", tabindex: "0", role: "button", "aria-label": "Luan de jaleco. Clique para seguir o tour" });
+    const body = el("g", { class: "ch-body" });
+    body.innerHTML = CHAR_SVG;
+    const say = el("g", { class: "ch-say", "aria-hidden": "true" });
+    ch.append(body, say);
+    svg.append(ch);
+    ch.addEventListener("click", charClick);
+    ch.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); charClick(); } });
+  }
+  function charClick() {
+    if (!running) setRunning(true);
+    if (current) step(1);
+    else open(charTag && P.tour.includes(charTag) ? charTag : P.tour[0], ch);
+  }
+
+  // Onde o personagem para: ao lado esquerdo do equipamento, ou à direita se não couber.
+  function spot(tag) {
+    const n = byTag.get(tag);
+    const [x, y] = n[layout];
+    const scale = n.featured ? 1.3 : 1;
+    const hw = HALF_W[n.kind] * scale;
+    const s = layout === "d" ? 1.3 : 1;
+    let cx = x - hw - 30 * s;
+    let face = 1;
+    if (cx < 26 * s) { cx = x + hw + 30 * s; face = -1; }
+    return { x: cx, y: y + HALF[n.kind] * scale, face, s };
+  }
+
+  function say(lines) {
+    const g = ch.querySelector(".ch-say");
+    g.textContent = "";
+    if (!lines) return;
+    const w = Math.max(...lines.map((l) => l.length)) * 6.1 + 20;
+    const h = lines.length * 14 + 12;
+    const p = spot(charTag);
+    // Balão acima da cabeça; se sair do desenho pelo topo, vai para o lado.
+    const topAbs = p.y - (CHAR_H + h + 14) * p.s;
+    const side = topAbs < 4;
+    let bx = side ? 22 : -w / 2;
+    const by = side ? -CHAR_H - 4 : -CHAR_H - h - 12;
+    // Mantém o balão dentro da largura do desenho.
+    const vbW = layout === "d" ? 1600 : 400;
+    const left = p.x + bx * p.s;
+    if (left + w * p.s > vbW - 4) bx = (vbW - 4 - p.x) / p.s - w;
+    else if (left < 4) bx = (4 - p.x) / p.s;
+    g.append(el("rect", { class: "ch-bubble", x: bx, y: by, width: w, height: h, rx: 7 }));
+    const tx = Math.min(Math.max(0, bx + 10), bx + w - 10);
+    if (!side) g.append(el("path", { class: "ch-bubble", d: `M${tx - 5},${by + h - 1} L${tx},${by + h + 7} L${tx + 5},${by + h - 1}` }));
+    lines.forEach((l, i) => {
+      const t = el("text", { class: i === 0 ? "ch-text ch-text--b" : "ch-text", x: bx + 10, y: by + 18 + i * 14 });
+      t.textContent = l;
+      g.append(t);
+    });
+    // O balão fica fora do corpo espelhado, então só acompanha a escala.
+    g.setAttribute("transform", `scale(${p.s})`);
+  }
+
+  function placeChar(tag, animate, lines) {
+    if (!ch) return;
+    const prev = charTag ? spot(charTag) : null;
+    charTag = tag;
+    const p = spot(tag);
+    const dist = prev ? Math.hypot(p.x - prev.x, p.y - prev.y) : 0;
+    const dur = animate && !reduced ? Math.min(1.6, Math.max(0.45, dist / 520)) : 0;
+    ch.style.transitionDuration = dur + "s";
+    ch.style.transform = `translate(${p.x}px, ${p.y}px)`;
+    ch.querySelector(".ch-body").setAttribute("transform", `scale(${p.s * p.face} ${p.s})`);
+    ch.classList.remove("is-pointing");
+    ch.classList.toggle("is-walking", dur > 0);
+    say(null);
+    clearTimeout(walkTimer);
+    walkTimer = setTimeout(() => {
+      ch.classList.remove("is-walking");
+      ch.classList.add("is-pointing");
+      say(lines);
+    }, dur * 1000);
+  }
+  function sayFor(n) {
+    if (n.featured) return [n.name, "Meu case principal!"];
+    if (n.tag === "N-900") return ["Fale comigo!", "LinkedIn, GitHub ou Gmail."];
+    return [n.name, SAY[n.status] || "Vem ver!"];
   }
 
   // ---------- Destaque de linhas conectadas ----------
@@ -244,7 +375,7 @@
   function rows(n) {
     return [
       ["Serviço", esc(n.service)],
-      ["Status", `<span class="status-pill status-pill--${n.status}">${STATUS_LONG[n.status]}</span>`],
+      ...(n.status ? [["Status", `<span class="status-pill status-pill--${n.status}">${STATUS_LONG[n.status]}</span>`]] : []),
       ...(n.problem ? [["Problema", esc(n.problem)]] : []),
       ["Entra", esc(n.inputs)],
       ["Sai", esc(n.outputs)],
@@ -272,6 +403,7 @@
     ds.setAttribute("aria-hidden", "false");
     ds.querySelector("table").scrollTop = 0;
     mark(tag);
+    placeChar(tag, true, sayFor(n));
     document.getElementById("ds-title").focus({ preventScroll: true });
     return true;
   }
@@ -350,6 +482,20 @@
   }));
   document.querySelector(".skip").addEventListener("click", () => { texto.hidden = false; });
 
+  // ---------- Filtro por status na legenda ----------
+  const filters = [...document.querySelectorAll("[data-filter]")];
+  filters.forEach((b) => b.addEventListener("click", () => {
+    const on = b.getAttribute("aria-pressed") !== "true";
+    filters.forEach((o) => o.setAttribute("aria-pressed", "false"));
+    b.setAttribute("aria-pressed", String(on));
+    if (on) svg.dataset.filter = b.dataset.filter;
+    else delete svg.dataset.filter;
+    if (on) {
+      const tags = P.nodes.filter((n) => n.status === b.dataset.filter).map((n) => n.tag);
+      logTags(`${b.textContent.trim()}:`, tags);
+    }
+  }));
+
   // ---------- Abas "sobre mim" ----------
   const tabs = [...document.querySelectorAll('[role="tab"]')];
   function selectTab(tab, focus) {
@@ -362,6 +508,10 @@
     if (focus) tab.focus();
   }
   function showPanel(id) {
+    if (id === "sobre") {
+      document.getElementById("sobre").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+      return true;
+    }
     const tab = tabs.find((t) => t.getAttribute("aria-controls") === id);
     if (!tab) return false;
     selectTab(tab, false);
