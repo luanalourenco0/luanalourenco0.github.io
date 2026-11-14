@@ -8,7 +8,7 @@
   const svg = document.getElementById("plant");
   const mq = window.matchMedia("(max-width: 820px)");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const VIEW = { d: "0 0 1600 760", m: "0 0 400 1610" };
+  const VIEW = { d: "0 0 1600 830", m: "0 0 400 1800" };
 
   // Meia altura de cada símbolo, usada para posicionar os rótulos abaixo dele.
   const HALF = { tank: 50, column: 115, reactor: 70, exchanger: 46, valve: 18, control: 42, feed: 24, compressor: 42, outlet: 26 };
@@ -644,7 +644,7 @@
   mq.addEventListener("change", () => { layout = mq.matches ? "m" : "d"; render(false); });
   render(true);
   buildText();
-  log("Planta Luan, revisão A. Desenho carregado.");
+  log("Planta Luan, revisão B. Desenho carregado.");
   logTags("Clique num equipamento, digite ajuda, ou comece por", ["T-201", "R-301", "TK-501"]);
   setTimeout(() => setRunning(true), reduced ? 0 : 2200);
 })();

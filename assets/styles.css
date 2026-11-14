@@ -173,11 +173,11 @@ h1 {
 .lg--planned { stroke: var(--ink-soft); stroke-dasharray: 3 4; stroke-width: 1.8; }
 
 /* Área do desenho com papel quadriculado */
-/* Altura proporcional à largura (viewBox 1600x760), limitada à altura da tela:
+/* Altura proporcional à largura (viewBox 1600x830), limitada à altura da tela:
    em notebook o desenho não encolhe para caber o cabeçalho e o rodapé. */
 .drawing {
   margin: 0;
-  height: clamp(420px, calc((100vw - 28px) * 0.475), calc(100dvh - 60px));
+  height: clamp(420px, calc((100vw - 28px) * 0.519), calc(100dvh - 60px));
   position: relative;
   background-color: var(--paper);
   background-image:

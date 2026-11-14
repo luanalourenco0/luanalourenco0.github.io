@@ -1,7 +1,7 @@
 // Conteúdo do fluxograma. Cada equipamento é um projeto ou um bloco da trajetória.
 // status: "diario" (uso todo dia), "finalizado" (entregue), "desenvolvimento" (funciona em parte, ainda evoluindo).
 // Sem status: blocos da trajetória que não são projetos.
-// Coordenadas: d = desenho largo (viewBox 1600x760), m = celular (viewBox 400x1610).
+// Coordenadas: d = desenho largo (viewBox 1600x830), m = celular (viewBox 400x1800).
 
 window.PLANT = {
   person: {
@@ -13,7 +13,7 @@ window.PLANT = {
 
   // Ordem do tour guiado.
   tour: ["TK-101", "CR-102", "F-001", "T-201", "R-301", "E-401", "XV-450",
-         "TK-501", "TK-502", "TK-503", "TK-504", "N-900"],
+         "TK-501", "TK-505", "TK-502", "TK-503", "TK-504", "N-900"],
 
   nodes: [
     {
@@ -55,11 +55,17 @@ window.PLANT = {
     {
       tag: "R-301", kind: "reactor", name: "Equipe de agentes", status: "desenvolvimento",
       d: [590, 430], m: [200, 620],
-      service: "Reator multiagente: cada agente tem papel, modelo e limite de permissão próprios.",
-      inputs: "Luffy (Claude Haiku) como chefe de gabinete e único editor do cérebro; Zoro (Claude Sonnet) desenvolve; Sanji (GPT) audita de forma independente; Brook (GPT) prepara conteúdo; Franky busca oportunidades de carreira.",
-      outputs: "Trabalho dividido por papel, com delegação entre agentes via MCP e aprovação humana antes de qualquer ação externa.",
-      instruments: "Claude e GPT, MCP, conectores do Claude Code",
-      notes: "Em desenvolvimento: Luffy e Brook já trabalham no dia a dia; a delegação automática entre os agentes ainda está em testes.",
+      service: "Reator multiagente: 17 agentes no OpenBot, cada um com papel, modelo e limite de permissão próprios, conversando num canal comum.",
+      inputs: "Luffy (Claude Haiku) é o chefe de gabinete e porta de entrada; Nami planeja, Franky implementa, Zoro (Codex) revisa sem poder editar e Usopp testa como usuário. Há agentes para Instagram, LinkedIn, X, vídeo, pesquisa, finanças, prospecção e restauração de fotos.",
+      outputs: "Trabalho dividido por papel, com um registro de aprovações: cada pedido, OK e entrega fica anotado com data e evidência.",
+      extra: [
+        ["Redes sociais", "Envelope de autonomia escrito: o agente do Instagram publica sozinho dentro de regras fixas; no X e no LinkedIn os agentes montam a fila da semana e só publicam depois de um OK meu. Curtir, seguir, mandar mensagem ou mexer em perfil é sempre pedido por ação."],
+        ["Bot do X", "Fila de posts com contagem de caracteres, divisão em thread e log, escrita a partir de amostras da minha própria voz."],
+        ["Restauração de fotos", "Ferramenta local para restaurar fotos antigas sem alterar o rosto da pessoa. Ainda em teste: reprovada na revisão interna para venda por cor escura e checagem de identidade pouco confiável."],
+        ["Modelos", "Claude (Haiku, Sonnet e Opus), GPT via Codex, Gemini e Grok, escolhidos por custo e papel para caber nos planos que eu já pago."],
+      ],
+      instruments: "OpenBot, Claude Code, Codex, Gemini, Grok, MCP, Markdown",
+      notes: "Em desenvolvimento: Luffy, os agentes de redes sociais e a revisão do Zoro já trabalham no dia a dia; outros agentes ainda estão em teste.",
     },
     {
       tag: "E-401", kind: "exchanger", name: "Revisão cruzada", status: "diario",
@@ -80,7 +86,7 @@ window.PLANT = {
       notes: "Este portfólio passou por ela: foi construído por IA e só foi publicado depois que eu revisei.",
     },
     {
-      tag: "TK-501", kind: "tank", name: "LUAN OS", status: "diario", featured: true,
+      tag: "TK-501", kind: "tank", name: "LUAN OS", status: "diario",
       d: [1300, 140], m: [110, 1150],
       service: "Meu painel diário: agenda, tarefas, prazos, resumos de e-mail e radar de vagas num só lugar, que qualquer agente meu também consegue ler.",
       problem: "Começar o dia abrindo cinco abas e perguntando a cada IA o que eu tinha para fazer. Cada uma respondia com um pedaço diferente.",
@@ -101,26 +107,48 @@ window.PLANT = {
       demo: "https://luanalourenco0.github.io/luan-os-demo/",
     },
     {
+      tag: "TK-505", kind: "tank", name: "App fitness", status: "desenvolvimento",
+      d: [1300, 690], m: [110, 1530],
+      service: "App de acompanhamento de treino e dieta: eu registro pelo chat do Telegram ou pela interface do app, e tudo cai numa planilha que monta o painel, as semanas e a progressão de carga.",
+      problem: "Planilha de treino que ninguém preenche: abrir o Sheets na academia, achar a linha certa e digitar carga por carga.",
+      inputs: "Mensagem em linguagem natural (\"supino 4x10 com 30 kg\", \"almocei arroz, feijão e frango\") ou os formulários de treino e refeição do app.",
+      outputs: "Planilha preenchida com confirmação na hora, botões de desfazer e corrigir, e as telas Hoje, Painel, Semanas e Progressão.",
+      extra: [
+        ["Arquitetura", "Agente em Python (Google ADK e LiteLLM, Gemini por padrão) que nunca escreve direto na planilha: tudo passa por uma API em Apps Script que aceita só JSON validado, devolve todos os erros de uma vez e não grava nada se algo estiver errado."],
+        ["Interface", "App com o Pulso, um treinador animado que dá dicas, abas de treino e refeição, escolha da data e revisão antes de enviar. Funciona em modo prévia fora do Telegram, com catálogo de exemplo."],
+        ["Confiabilidade", "Cada escrita leva um ID de requisição para não duplicar em reenvios, mensagens repetidas do Telegram são ignoradas e cada chamada ao modelo tem prazo, com um segundo modelo de reserva quando o primeiro falha."],
+        ["Qualidade", "Cerca de 900 testes automatizados (pytest e Node), lint e checagem de tipos, todos rodando sem rede e sem conta Google."],
+        ["Origem", "Começou em parceria com o Breno Moreira em setembro de 2026. Hoje eu cuido de transformar o projeto em app, com interface própria, num repositório meu."],
+      ],
+      instruments: "Python, Google ADK, LiteLLM, Gemini, Google Apps Script, Google Sheets, Telegram, JavaScript, pytest, Claude Code e Codex",
+      notes: "Em desenvolvimento: o registro pelo chat já funciona; a interface está virando um app de verdade.",
+      demo: "https://luanalourenco0.github.io/shape-miniapp/",
+    },
+    {
       tag: "TK-502", kind: "tank", name: "Luz & Encanto", status: "finalizado",
       d: [1480, 300], m: [290, 1150],
       service: "Criação de marca a partir de produtos reais, 100% feita por agentes de IA, para o artesanato da minha mãe (@luz.encanto.artesanal).",
       inputs: "Fotos dos produtos reais que ela faz à mão.",
       outputs: "Identidade da marca, capa e destaques do perfil, artes e legendas dos posts, tudo produzido por agentes e aprovado por ela antes de ir ao ar.",
-      instruments: "Codex, Canva, agendamento do Meta e um agente dedicado (Brook) para artes e legendas",
-      notes: "Da foto do produto ao post no ar, sem designer: os agentes criam, ela aprova.",
+      instruments: "Codex, Canva, Meta Business Suite e um agente dedicado (Sanji) que publica sozinho dentro de regras escritas",
+      notes: "Da foto do produto ao post no ar, sem designer: os agentes criam, e o que foge das regras passa por aprovação.",
     },
     {
       tag: "TK-503", kind: "tank", name: "Criação de sites com agentes de IA", status: "desenvolvimento",
-      d: [1300, 470], m: [110, 1340],
+      d: [1300, 420], m: [110, 1340],
       service: "Pequeno negócio: sites para profissionais autônomos, construídos com agentes de IA.",
       inputs: "O que o profissional precisa mostrar on-line e como os clientes dele procuram esse serviço.",
       outputs: "Sites prontos, mais o kit comercial: planilha de prospecção, roteiro de abordagem, proposta e material de divulgação.",
-      instruments: "Claude, Codex, Google Drive e Planilhas",
-      notes: "Eu cuido da prospecção e da venda. Nenhum contato com cliente sai sem a minha revisão.",
+      extra: [
+        ["Primeiro cliente", "Site de uma podóloga em Mogi das Cruzes, em Astro estático: uma página por queixa do paciente, dados do negócio num único arquivo, aviso de cookies e um build de publicação que falha se ainda houver informação não confirmada. Em revisão final com a cliente."],
+        ["Redes da cliente", "Um agente repagina o Instagram dela e publica o lote da semana depois do meu OK."],
+      ],
+      instruments: "Claude Code, Codex, Astro, Vitest, Google Drive e Planilhas",
+      notes: "Eu cuido da prospecção e da venda. Nenhum contato com cliente sai sem a minha revisão, e nenhum dado vai ao ar sem ser confirmado por ela.",
     },
     {
       tag: "TK-504", kind: "tank", name: "IA na engenharia", status: "diario",
-      d: [1480, 620], m: [290, 1340],
+      d: [1480, 560], m: [290, 1340],
       service: "Agentes de IA aplicados ao trabalho técnico de um engenheiro químico.",
       inputs: "Problemas de engenharia: fluxogramas de processo, balanços, cálculos de fenômenos de transporte, relatórios e documentação técnica.",
       outputs: "Entregas técnicas mais rápidas e conferidas: fluxogramas corrigidos e validados por script, resoluções revisadas passo a passo e documentos no padrão exigido.",
@@ -129,7 +157,7 @@ window.PLANT = {
     },
     {
       tag: "N-900", kind: "outlet", name: "Fale comigo", 
-      d: [1010, 640], m: [200, 1530],
+      d: [1010, 640], m: [200, 1720],
       service: "Bocal de saída: o produto vai para você.",
       inputs: "Uma vaga, um problema de negócio ou uma ideia para automatizar.",
       outputs: "Uma conversa. Respondo por e-mail ou LinkedIn.",
@@ -150,7 +178,7 @@ window.PLANT = {
       d: { pts: [[820, 430], [820, 300], [630, 300], [630, 430]] }, m: { pts: [[200, 820], [40, 820], [40, 620], [138, 620]] } },
     { from: "E-401", to: "XV-450", type: "process", d: { route: "h" }, m: { route: "v" } },
     { from: "XV-450", to: "N-900", type: "process", d: { route: "v" }, m: { route: "v" } },
-    ...["TK-501", "TK-502", "TK-503", "TK-504"].map((t, i) => ({
+    ...["TK-501", "TK-502", "TK-503", "TK-504", "TK-505"].map((t, i) => ({
       from: "XV-450", to: t, type: "process",
       d: { route: "hvh", mid: 1160 },
       m: { trunk: i % 2 === 0 ? 20 : 380, split: 1070 },
@@ -158,7 +186,7 @@ window.PLANT = {
   ],
 
   gauges: [
-    { letters: "AI", value: "5", label: "agentes com papel definido" },
+    { letters: "AI", value: "17", label: "agentes com papel definido" },
     { letters: "FI", value: "2×", label: "atualizações do painel por dia" },
     { letters: "HS", value: "1", label: "humano aprovando tudo" },
   ],
