@@ -1,7 +1,7 @@
 // Conteúdo do fluxograma. Cada equipamento é um projeto ou um bloco da trajetória.
 // status: "diario" (uso todo dia), "finalizado" (entregue), "desenvolvimento" (funciona em parte, ainda evoluindo).
 // Sem status: blocos da trajetória que não são projetos.
-// Coordenadas: d = desenho largo (viewBox 1600x830), m = celular (viewBox 400x1800).
+// Coordenadas: d = desenho largo (viewBox 1600x850), m = celular (viewBox 400x1900).
 
 window.PLANT = {
   person: {
@@ -79,9 +79,9 @@ window.PLANT = {
     {
       tag: "XV-450", kind: "valve", name: "Intertravamento humano", status: "diario",
       d: [1010, 430], m: [200, 990],
-      service: "Válvula que só abre com aprovação explícita.",
+      service: "Válvula que só abre com aprovação explícita: da ação em si ou da regra escrita que a libera.",
       inputs: "Qualquer ação irreversível ou externa: enviar, publicar, agendar, fazer merge, deploy ou gastar.",
-      outputs: "Ação liberada com registro de quem aprovou e quando. Sem aprovação, a linha fica fechada.",
+      outputs: "Ação liberada com registro de quem aprovou e quando. Onde eu já aprovei regras escritas, como nos posts de rotina do Instagram, o agente age dentro delas; o que foge da regra volta para mim. Sem nenhuma das duas aprovações, a linha fica fechada.",
       instruments: "Regras escritas em AGENTS.md e CLAUDE.md, pedidos de permissão nas ferramentas MCP",
       notes: "Este portfólio passou por ela: foi construído por IA e só foi publicado depois que eu revisei.",
     },
@@ -108,7 +108,7 @@ window.PLANT = {
     },
     {
       tag: "TK-505", kind: "tank", name: "App fitness", status: "desenvolvimento",
-      d: [1300, 690], m: [110, 1530],
+      d: [1300, 710], m: [110, 1630],
       service: "App de acompanhamento de treino e dieta: eu registro pelo chat do Telegram ou pela interface do app, e tudo cai numa planilha que monta o painel, as semanas e a progressão de carga.",
       problem: "Planilha de treino que ninguém preenche: abrir o Sheets na academia, achar a linha certa e digitar carga por carga.",
       inputs: "Mensagem em linguagem natural (\"supino 4x10 com 30 kg\", \"almocei arroz, feijão e frango\") ou os formulários de treino e refeição do app.",
@@ -129,13 +129,13 @@ window.PLANT = {
       d: [1480, 300], m: [290, 1150],
       service: "Criação de marca a partir de produtos reais, 100% feita por agentes de IA, para o artesanato da minha mãe (@luz.encanto.artesanal).",
       inputs: "Fotos dos produtos reais que ela faz à mão.",
-      outputs: "Identidade da marca, capa e destaques do perfil, artes e legendas dos posts, tudo produzido por agentes e aprovado por ela antes de ir ao ar.",
+      outputs: "Identidade da marca, capa e destaques do perfil, artes e legendas dos posts, tudo produzido por agentes. Os posts de rotina saem dentro de regras que eu aprovei; o que foge delas passa por aprovação antes de ir ao ar.",
       instruments: "Codex, Canva, Meta Business Suite e um agente dedicado (Sanji) que publica sozinho dentro de regras escritas",
       notes: "Da foto do produto ao post no ar, sem designer: os agentes criam, e o que foge das regras passa por aprovação.",
     },
     {
       tag: "TK-503", kind: "tank", name: "Criação de sites com agentes de IA", status: "desenvolvimento",
-      d: [1300, 420], m: [110, 1340],
+      d: [1300, 400], m: [110, 1390],
       service: "Pequeno negócio: sites para profissionais autônomos, construídos com agentes de IA.",
       inputs: "O que o profissional precisa mostrar on-line e como os clientes dele procuram esse serviço.",
       outputs: "Sites prontos, mais o kit comercial: planilha de prospecção, roteiro de abordagem, proposta e material de divulgação.",
@@ -148,7 +148,7 @@ window.PLANT = {
     },
     {
       tag: "TK-504", kind: "tank", name: "IA na engenharia", status: "diario",
-      d: [1480, 560], m: [290, 1340],
+      d: [1480, 560], m: [290, 1390],
       service: "Agentes de IA aplicados ao trabalho técnico de um engenheiro químico.",
       inputs: "Problemas de engenharia: fluxogramas de processo, balanços, cálculos de fenômenos de transporte, relatórios e documentação técnica.",
       outputs: "Entregas técnicas mais rápidas e conferidas: fluxogramas corrigidos e validados por script, resoluções revisadas passo a passo e documentos no padrão exigido.",
@@ -157,7 +157,7 @@ window.PLANT = {
     },
     {
       tag: "N-900", kind: "outlet", name: "Fale comigo", 
-      d: [1010, 640], m: [200, 1720],
+      d: [1010, 640], m: [200, 1820],
       service: "Bocal de saída: o produto vai para você.",
       inputs: "Uma vaga, um problema de negócio ou uma ideia para automatizar.",
       outputs: "Uma conversa. Respondo por e-mail ou LinkedIn.",
@@ -188,6 +188,6 @@ window.PLANT = {
   gauges: [
     { letters: "AI", value: "17", label: "agentes com papel definido" },
     { letters: "FI", value: "2×", label: "atualizações do painel por dia" },
-    { letters: "HS", value: "1", label: "humano aprovando tudo" },
+    { letters: "HS", value: "1", label: "humano com a palavra final" },
   ],
 };

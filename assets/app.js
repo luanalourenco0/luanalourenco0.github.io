@@ -8,7 +8,7 @@
   const svg = document.getElementById("plant");
   const mq = window.matchMedia("(max-width: 820px)");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const VIEW = { d: "0 0 1600 830", m: "0 0 400 1800" };
+  const VIEW = { d: "0 0 1600 850", m: "0 0 400 1900" };
 
   // Meia altura de cada símbolo, usada para posicionar os rótulos abaixo dele.
   const HALF = { tank: 50, column: 115, reactor: 70, exchanger: 46, valve: 18, control: 42, feed: 24, compressor: 42, outlet: 26 };
@@ -161,7 +161,7 @@
     P.nodes.forEach((n) => {
       const [x, y] = n[layout];
       const g = el("g", {
-        class: `node node--${n.status || "trajetoria"}${n.featured ? " node--featured" : ""}`,
+        class: `node node--${n.status || "trajetoria"}`,
         "data-status": n.status || "",
         transform: `translate(${x} ${y})`,
         tabindex: "0",
@@ -170,12 +170,10 @@
         "aria-label": `${n.tag}, ${n.name}. Abrir folha de dados`,
       });
       g.style.setProperty("--delay", 0.1 + order.indexOf(n.tag) * 0.07 + "s");
-      // O case principal é desenhado maior que os outros tanques.
-      const scale = n.featured ? 1.3 : 1;
-      const h = HALF[n.kind] * scale;
-      const halo = el("rect", { class: "halo", x: -74 * scale, y: -h - (n.kind === "reactor" ? 40 : n.kind === "valve" ? 46 : 8), width: 148 * scale, height: h * 2 + 90 + (n.kind === "reactor" ? 32 : n.kind === "valve" ? 38 : 0) + (n.featured ? 18 : 0), rx: 6 });
+      const h = HALF[n.kind];
+      const halo = el("rect", { class: "halo", x: -74, y: -h - (n.kind === "reactor" ? 40 : n.kind === "valve" ? 46 : 8), width: 148, height: h * 2 + 90 + (n.kind === "reactor" ? 32 : n.kind === "valve" ? 38 : 0), rx: 6 });
       g.append(halo);
-      const sym = el("g", { "aria-hidden": "true", transform: `scale(${scale})` });
+      const sym = el("g", { "aria-hidden": "true" });
       sym.innerHTML = symbol(n);
       g.append(sym);
 
@@ -189,12 +187,6 @@
         t.textContent = line;
         g.append(t);
       });
-      if (n.featured) {
-        ly += 17;
-        const f = el("text", { class: "lbl lbl-feature", x: 0, y: ly, "aria-hidden": "true" });
-        f.textContent = "case principal";
-        g.append(f);
-      }
       if (STATUS_TEXT[n.status]) {
         ly += 17;
         const s = el("text", { class: "lbl lbl-status", x: 0, y: ly, "aria-hidden": "true" });
@@ -274,13 +266,12 @@
   function spot(tag) {
     const n = byTag.get(tag);
     const [x, y] = n[layout];
-    const scale = n.featured ? 1.3 : 1;
-    const hw = HALF_W[n.kind] * scale;
+    const hw = HALF_W[n.kind];
     const s = layout === "d" ? 1.3 : 1;
     let cx = x - hw - 30 * s;
     let face = 1;
     if (cx < 26 * s) { cx = x + hw + 30 * s; face = -1; }
-    return { x: cx, y: y + HALF[n.kind] * scale, face, s };
+    return { x: cx, y: y + HALF[n.kind], face, s };
   }
 
   function say(lines) {
@@ -292,14 +283,47 @@
     const p = spot(charTag);
     // Balão acima da cabeça; se sair do desenho pelo topo, vai para o lado.
     const topAbs = p.y - (CHAR_H + h + 14) * p.s;
-    const side = topAbs < 4;
-    let bx = side ? 22 : -w / 2;
-    const by = side ? -CHAR_H - 4 : -CHAR_H - h - 12;
+    const forceSide = topAbs < 4;
+    const sideY = -CHAR_H - 4, topY = -CHAR_H - h - 12;
     // Mantém o balão dentro da largura do desenho.
     const vbW = layout === "d" ? 1600 : 400;
-    const left = p.x + bx * p.s;
-    if (left + w * p.s > vbW - 4) bx = (vbW - 4 - p.x) / p.s - w;
-    else if (left < 4) bx = (4 - p.x) / p.s;
+    const clampX = (x) => {
+      const left = p.x + x * p.s;
+      if (left + w * p.s > vbW - 4) return (vbW - 4 - p.x) / p.s - w;
+      if (left < 4) return (4 - p.x) / p.s;
+      return x;
+    };
+    // Centralizado na cabeça; se cobrir o texto de outro equipamento, tenta puxar para um dos lados
+    // e, por último, ao lado do personagem (primeiro à esquerda, depois à direita).
+    // Se nenhuma posição fica livre, fica a que cobre menos texto.
+    const covers = ({ x, y }) => {
+      const r = { l: p.x + x * p.s, t: p.y + y * p.s, r: p.x + (x + w) * p.s, b: p.y + (y + h + 8) * p.s };
+      let area = 0;
+      svg.querySelectorAll(".node").forEach((nd) => {
+        if (nd.dataset.tag === charTag) return;
+        const [nx, ny] = byTag.get(nd.dataset.tag)[layout];
+        nd.querySelectorAll("text").forEach((t) => {
+          try {
+            const bb = t.getBBox();
+            const ow = Math.min(r.r, nx + bb.x + bb.width) - Math.max(r.l, nx + bb.x);
+            const oh = Math.min(r.b, ny + bb.y + bb.height) - Math.max(r.t, ny + bb.y);
+            if (ow > 0 && oh > 0) area += ow * oh;
+          } catch (e) { /* texto ainda não medido: ignora */ }
+        });
+      });
+      return area;
+    };
+    const above = forceSide ? [] : [-w / 2, -10, -w + 10].map((x) => ({ x: clampX(x), y: topY, side: false }));
+    const beside = [22, -32 - w].map((x) => ({ x: clampX(x), y: sideY, side: true }));
+    if (!forceSide) beside.reverse();
+    const options = [...above, ...beside];
+    let pick = options[0], best = Infinity;
+    for (const o of options) {
+      const a = covers(o);
+      if (a < best) { best = a; pick = o; }
+      if (a === 0) break;
+    }
+    const bx = pick.x, by = pick.y, side = pick.side;
     g.append(el("rect", { class: "ch-bubble", x: bx, y: by, width: w, height: h, rx: 7 }));
     const tx = Math.min(Math.max(0, bx + 10), bx + w - 10);
     if (!side) g.append(el("path", { class: "ch-bubble", d: `M${tx - 5},${by + h - 1} L${tx},${by + h + 7} L${tx + 5},${by + h - 1}` }));
@@ -333,7 +357,6 @@
     }, dur * 1000);
   }
   function sayFor(n) {
-    if (n.featured) return [n.name, "Meu case principal!"];
     if (n.tag === "N-900") return ["Fale comigo!", "LinkedIn, GitHub ou Gmail."];
     return [n.name, SAY[n.status] || "Vem ver!"];
   }
