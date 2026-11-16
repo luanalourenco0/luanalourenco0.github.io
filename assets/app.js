@@ -296,22 +296,24 @@
     // Centralizado na cabeça; se cobrir o texto de outro equipamento, tenta puxar para um dos lados
     // e, por último, ao lado do personagem (primeiro à esquerda, depois à direita).
     // Se nenhuma posição fica livre, fica a que cobre menos texto.
+    // Obstáculos: textos dos outros equipamentos, rótulos das tubulações (alguns girados, por isso
+    // a medida é feita na tela) e o próprio personagem, que pesa muito mais para o balão nunca cobrir a cabeça.
+    const m = svg.getScreenCTM();
+    const toScreen = (l, t, r, b) => ({ l: m.a * l + m.e, t: m.d * t + m.f, r: m.a * r + m.e, b: m.d * b + m.f });
+    const overlap = (a, b) => {
+      const ow = Math.min(a.r, b.r) - Math.max(a.l, b.l);
+      const oh = Math.min(a.b, b.b) - Math.max(a.t, b.t);
+      return ow > 0 && oh > 0 ? ow * oh : 0;
+    };
+    const obstacles = m ? [
+      ...svg.querySelectorAll(`.node:not([data-tag="${charTag}"]) text, .lbl-pipe`),
+    ].map((t) => { const r = t.getBoundingClientRect(); return { l: r.left, t: r.top, r: r.right, b: r.bottom }; }) : [];
+    const bodyX = [-28 * p.face * p.s, 20 * p.face * p.s];
+    const body = m ? toScreen(p.x + Math.min(...bodyX), p.y - CHAR_H * p.s, p.x + Math.max(...bodyX), p.y) : null;
     const covers = ({ x, y }) => {
-      const r = { l: p.x + x * p.s, t: p.y + y * p.s, r: p.x + (x + w) * p.s, b: p.y + (y + h + 8) * p.s };
-      let area = 0;
-      svg.querySelectorAll(".node").forEach((nd) => {
-        if (nd.dataset.tag === charTag) return;
-        const [nx, ny] = byTag.get(nd.dataset.tag)[layout];
-        nd.querySelectorAll("text").forEach((t) => {
-          try {
-            const bb = t.getBBox();
-            const ow = Math.min(r.r, nx + bb.x + bb.width) - Math.max(r.l, nx + bb.x);
-            const oh = Math.min(r.b, ny + bb.y + bb.height) - Math.max(r.t, ny + bb.y);
-            if (ow > 0 && oh > 0) area += ow * oh;
-          } catch (e) { /* texto ainda não medido: ignora */ }
-        });
-      });
-      return area;
+      if (!m) return 0;
+      const r = toScreen(p.x + x * p.s, p.y + y * p.s, p.x + (x + w) * p.s, p.y + (y + h + 8) * p.s);
+      return obstacles.reduce((acc, o) => acc + overlap(r, o), 0) + 20 * overlap(r, body);
     };
     const above = forceSide ? [] : [-w / 2, -10, -w + 10].map((x) => ({ x: clampX(x), y: topY, side: false }));
     const beside = [22, -32 - w].map((x) => ({ x: clampX(x), y: sideY, side: true }));
